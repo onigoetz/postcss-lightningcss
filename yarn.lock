@@ -517,7 +517,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ava@npm:^4.0.1":
+"ava@npm:4.0.1":
   version: 4.0.1
   resolution: "ava@npm:4.0.1"
   dependencies:
@@ -617,7 +617,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"c8@npm:^7.11.0":
+"c8@npm:7.11.0":
   version: 7.11.0
   resolution: "c8@npm:7.11.0"
   dependencies:
@@ -3073,7 +3073,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-nested@npm:^5.0.6":
+"postcss-nested@npm:5.0.6":
   version: 5.0.6
   resolution: "postcss-nested@npm:5.0.6"
   dependencies:
@@ -3089,11 +3089,11 @@ __metadata:
   resolution: "postcss-parcel-css@workspace:."
   dependencies:
     "@parcel/css": ^1.0.1
-    ava: ^4.0.1
-    c8: ^7.11.0
-    postcss: ^8.4.5
-    postcss-nested: ^5.0.6
-    semistandard: ^16.0.1
+    ava: 4.0.1
+    c8: 7.11.0
+    postcss: 8.4.5
+    postcss-nested: 5.0.6
+    semistandard: 16.0.1
   peerDependencies:
     postcss: ^8.0.0
   languageName: unknown
@@ -3109,7 +3109,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.5":
+"postcss@npm:8.4.5":
   version: 8.4.5
   resolution: "postcss@npm:8.4.5"
   dependencies:
@@ -3347,7 +3347,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"semistandard@npm:^16.0.1":
+"semistandard@npm:16.0.1":
   version: 16.0.1
   resolution: "semistandard@npm:16.0.1"
   dependencies:
