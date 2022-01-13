@@ -1,0 +1,27 @@
+name: Node CI
+
+on:
+    push:
+    pull_request:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node-version: [12.x, 14.x, 16.x]
+        # TODO : add windows as target
+          
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2.5.1
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'yarn'
+    - name: yarn install
+      run: yarn install
+    - name: Linting
+      run: yarn test

@@ -1,0 +1,45 @@
+{
+  "name": "postcss-parcel-css",
+  "version": "0.1.0",
+  "description": "PostCSS plugin to use @parcel/css",
+  "keywords": [
+    "css",
+    "minifier",
+    "minify",
+    "compress",
+    "optimisation",
+    "parcel",
+    "postcss",
+    "plugin"
+  ],
+  "repository": "onigoetz/postcss-parcel-css",
+  "author": "Stéphane Goetz <onigoetz@onigoetz.ch>",
+  "license": "MIT",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "c8 --reporter=lcovonly --reporter=text ava",
+    "lint": "semistandard",
+    "prepublishOnly": "yarn lint && yarn test"
+  },
+  "engines": {
+    "node": "^12.20.0 || ^14.13.0 || >=15.0.0",
+    "npm": ">=7.0.0"
+  },
+  "peerDependencies": {
+    "postcss": "^8.0.0"
+  },
+  "dependencies": {
+    "@parcel/css": "^1.0.1"
+  },
+  "devDependencies": {
+    "ava": "^4.0.1",
+    "c8": "^7.11.0",
+    "postcss": "^8.4.5",
+    "postcss-nested": "^5.0.6",
+    "semistandard": "^16.0.1"
+  },
+  "files": [
+    "src"
+  ],
+  "packageManager": "yarn@3.1.1"
+}
