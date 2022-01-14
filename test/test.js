@@ -66,6 +66,8 @@ test('error handling: @parcel/css error', async (t) => {
   t.is(error.loc.column, 1);
 });
 
+// TODO :: postcss-nested is embedded inside @parcel/css
+// we should try to find other postcss plugins to test with
 test('should work with postcss-nested', (t) => {
   t.plan(1);
 

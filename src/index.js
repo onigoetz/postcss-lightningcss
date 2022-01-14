@@ -1,3 +1,4 @@
+const browserslist = require('browserslist');
 const css = require('@parcel/css');
 
 const defaultOptions = {
@@ -10,27 +11,42 @@ const defaultOptions = {
   }
 };
 
-function parcelCssPlugin (options) {
+function parcelCssPlugin (options = {}) {
   const initializedOptions = {
-    ...defaultOptions, // TODO :: copy this
-    ...options
+    ...defaultOptions,
+    ...options,
+    parcelCssOptions: {
+      ...defaultOptions.parcelCssOptions,
+      ...(options.parcelCssOptions || {})
+    }
   };
 
-  // TODO :: add browsers option
+  if (initializedOptions.browsers != null) {
+    const browsers = browserslist(initializedOptions.browsers);
+    initializedOptions.parcelCssOptions.targets =
+      css.browserslistToTargets(browsers);
+  }
 
   return {
     postcssPlugin: 'postcss-parcel-css',
     OnceExit (root, { result, postcss }) {
       const fullOptions = {
         filename: root.source.file || '',
-        code: Buffer.from(root.toString()),
 
         ...initializedOptions.parcelCssOptions
       };
 
-      const { code } = css.transform(fullOptions);
+      const intermediateResult = root.toResult({
+        map: !!fullOptions.sourceMap
+      });
 
-      result.root = postcss.parse(code.toString(), { from: root.source.file });
+      fullOptions.code = Buffer.from(intermediateResult.css);
+
+      const res = css.transform(fullOptions);
+
+      result.root = postcss.parse(res.code.toString(), {
+        from: root.source.file
+      });
     }
   };
 }

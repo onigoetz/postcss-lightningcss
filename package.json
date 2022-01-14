@@ -29,7 +29,8 @@
     "postcss": "^8.0.0"
   },
   "dependencies": {
-    "@parcel/css": "^1.0.1"
+    "@parcel/css": "^1.0.1",
+    "browserslist": "^4.19.1"
   },
   "devDependencies": {
     "ava": "4.0.1",
