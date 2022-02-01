@@ -35,7 +35,7 @@
   "devDependencies": {
     "ava": "4.0.1",
     "c8": "7.11.0",
-    "postcss": "8.4.5",
+    "postcss": "8.4.6",
     "postcss-nested": "5.0.6",
     "semistandard": "16.0.1"
   },
