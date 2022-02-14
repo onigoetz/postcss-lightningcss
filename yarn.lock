@@ -128,7 +128,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@knagis/postcss-advanced-variables@npm:^4.0.0":
+"@knagis/postcss-advanced-variables@npm:4.0.0":
   version: 4.0.0
   resolution: "@knagis/postcss-advanced-variables@npm:4.0.0"
   dependencies:
@@ -3176,21 +3176,21 @@ __metadata:
   resolution: "postcss-parcel-css@workspace:."
   dependencies:
     "@ampproject/remapping": ^2.1.1
-    "@knagis/postcss-advanced-variables": ^4.0.0
+    "@knagis/postcss-advanced-variables": 4.0.0
     "@parcel/css": ^1.0.1
     ava: 4.0.1
     browserslist: ^4.19.1
     c8: 7.11.0
     postcss: 8.4.6
     postcss-nested: 5.0.6
-    postcss-scss: ^4.0.3
+    postcss-scss: 4.0.3
     semistandard: 16.0.1
   peerDependencies:
     postcss: ^8.0.0
   languageName: unknown
   linkType: soft
 
-"postcss-scss@npm:^4.0.3":
+"postcss-scss@npm:4.0.3":
   version: 4.0.3
   resolution: "postcss-scss@npm:4.0.3"
   peerDependencies:
