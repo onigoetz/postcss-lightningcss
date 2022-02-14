@@ -1,53 +1,73 @@
-const browserslist = require('browserslist');
-const css = require('@parcel/css');
+const browserslist = require("browserslist");
+const css = require("@parcel/css");
+const remapping = require("@ampproject/remapping");
 
-const defaultOptions = {
-  parcelCssOptions: {
-    // Disabled for now as we have no way to feed the sourcemap from postcss to @parcel/css
-    // Or from @parcel/css to postcss
-    // might be doable by doing : https://github.com/parcel-bundler/parcel/blob/v2/packages/transformers/css-experimental/src/CSSTransformer.js#L54-L64
-    sourceMap: false,
-    minify: true
-  }
+const defaultParcelCssOptions = {
+  minify: true,
 };
 
-function parcelCssPlugin (options = {}) {
-  const initializedOptions = {
-    ...defaultOptions,
-    ...options,
-    parcelCssOptions: {
-      ...defaultOptions.parcelCssOptions,
-      ...(options.parcelCssOptions || {})
-    }
+function parcelCssPlugin(partialOptions = {}) {
+  const parcelCssOptions = {
+    ...defaultParcelCssOptions,
+    ...(partialOptions.parcelCssOptions || {}),
   };
 
-  if (initializedOptions.browsers != null) {
-    const browsers = browserslist(initializedOptions.browsers);
-    initializedOptions.parcelCssOptions.targets =
-      css.browserslistToTargets(browsers);
+  // @parcel/css uses a custom syntax to declare supported browsers
+  // the `browsers` option provides a helper to declare them with
+  // a `browerslist` query
+  if (partialOptions.browsers != null) {
+    const browsers = browserslist(partialOptions.browsers);
+    parcelCssOptions.targets = css.browserslistToTargets(browsers);
   }
 
   return {
-    postcssPlugin: 'postcss-parcel-css',
-    OnceExit (root, { result, postcss }) {
-      const fullOptions = {
-        filename: root.source.file || '',
+    postcssPlugin: "postcss-parcel-css",
+    OnceExit(root, { result, postcss }) {
+      // Infer sourcemaps options from postcss
+      const map = result.opts.map;
 
-        ...initializedOptions.parcelCssOptions
+      const options = {
+        filename: root.source.file || "",
+        sourceMap: !!map,
+        ...parcelCssOptions,
       };
 
       const intermediateResult = root.toResult({
-        map: !!fullOptions.sourceMap
+        map: map ? { annotation: false, inline: false } : false,
       });
 
-      fullOptions.code = Buffer.from(intermediateResult.css);
+      options.code = Buffer.from(intermediateResult.css);
 
-      const res = css.transform(fullOptions);
+      const res = css.transform(options);
 
-      result.root = postcss.parse(res.code.toString(), {
-        from: root.source.file
-      });
-    }
+      // If we have a source map from PostCSS and @parcel/css
+      // we can merge the two together to get the original positions
+      let prev = null;
+      if (res.map != null && intermediateResult.map != null) {
+        const remapped = remapping(
+          [res.map.toString(), intermediateResult.map.toString()],
+          () => null
+        );
+
+        prev = remapped.toString();
+      } else if (res.map != null) {
+        // If we only have the source map from @parcel/css we'll at least use that
+        prev = res.map.toString();
+      }
+
+      result.root = postcss.parse(
+        map
+          ? `${res.code.toString()}\n/*# sourceMappingURL=data:application/json;base64,${Buffer.from(
+              prev
+            ).toString("base64")} */`
+          : res.code.toString(),
+        {
+          // TODO :: should we pass more options ?
+          from: result.opts.from,
+          map
+        }
+      );
+    },
   };
 }
 

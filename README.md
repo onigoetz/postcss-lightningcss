@@ -2,7 +2,8 @@
 
 This PostCSS plugin uses [@parcel/css](https://www.npmjs.com/package/@parcel/css) to compile and minify your CSS.
 
-`@parcel/css` is more than a minifier as it can replace quite a few PostCSS plugins such as `autoprefixer`. You can find the complete list of features in the [package's documentation](https://github.com/parcel-bundler/parcel-css#from-node) and the list of plugins it's able to replace below.
+`@parcel/css` is more than a minifier as it can replace quite a few PostCSS plugins such as `autoprefixer`.
+You can find the complete list of features in the [package's documentation](https://github.com/parcel-bundler/parcel-css#from-node) and the list of plugins it's able to replace below.
 
 ## Install
 
@@ -62,7 +63,9 @@ The detailed list of `parcelCssOptions` can be found [here](https://github.com/p
 
 ## About source maps
 
-Source map support isn't implemented correctly at the moment; use it at your own risk
+Source maps will pass through `@parcel/css`.
+But many mappings will be lost in translation; __`@parcel/css` creates only a source map for selectors__.
+Mappings for properties cannot be re-created after this transformation.
 
 ## PostCSS plugins that you can remove if you have `@parcel/css`
 
