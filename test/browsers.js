@@ -27,6 +27,9 @@ test('Should not remove prefixes without a list of browsers', (t) => {
     .then((result) => t.is(result.css, minified1));
 });
 
+/**
+ * replaces `autoprefixer`
+ */
 test('Should remove prefixes when browsers are set', (t) => {
   t.plan(1);
 
@@ -36,6 +39,9 @@ test('Should remove prefixes when browsers are set', (t) => {
     .then((result) => t.is(result.css, minified2));
 });
 
+/**
+ * replaces `autoprefixer`
+ */
 test('Should remove prefixes when targets are set', (t) => {
   t.plan(1);
 
@@ -47,6 +53,9 @@ test('Should remove prefixes when targets are set', (t) => {
     .then((result) => t.is(result.css, minified2));
 });
 
+/**
+ * replaces `postcss-logical`
+ */
 test('Should convert logical properties', (t) => {
   t.plan(1);
 
@@ -67,15 +76,34 @@ test('Should convert logical properties', (t) => {
     );
 });
 
+/*
+ * `postcss-color-hwb` knows how to replace the comma separated hwb() syntax (CSS Level 3)
+ * `@parcel/css` does the replacement for space separated hwb() syntax (CSS Level 4)
+ */
 test('Should convert hwb colors', (t) => {
   t.plan(1);
 
   return postcss()
     .use(postcssParcelCss({ browsers: 'edge 18' }))
-    .process('body { color: hwb(90, 0%, 0%, 0.5); }')
+    .process('body { color: hwb(90 0% 0% / 0.5); }')
     .then((result) => t.is(result.css, 'body{color:rgba(128,255,0,.5)}'));
 });
 
+/**
+ * replaces `postcss-color-hsl`
+ */
+test('Should convert comma separated hsl colors', (t) => {
+  t.plan(1);
+
+  return postcss()
+    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .process('body { color: hsla(200grad, 100%, 50%, 20%); }')
+    .then((result) => t.is(result.css, 'body{color:rgba(0,255,255,.2)}'));
+});
+
+/**
+ * replaces `postcss-color-hsl`
+ */
 test('Should convert space separated hsl colors', (t) => {
   t.plan(1);
 
@@ -85,6 +113,9 @@ test('Should convert space separated hsl colors', (t) => {
     .then((result) => t.is(result.css, 'body{color:rgba(0,255,255,.2)}'));
 });
 
+/**
+ * replaces `postcss-color-rgb`
+ */
 test('Should convert space separated rgba colors', (t) => {
   t.plan(1);
 
@@ -94,6 +125,24 @@ test('Should convert space separated rgba colors', (t) => {
     .then((result) => t.is(result.css, 'body{color:rgba(0,255,255,.2)}'));
 });
 
+/**
+ * replaces `postcss-color-hex-alpha`
+ */
+test('Should convert alpha hex codes', (t) => {
+  t.plan(1);
+
+  return postcss()
+    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .process('body { color: #9d9c; }')
+    .then((result) => t.is(result.css, 'body{color:rgba(153,221,153,.8)}'));
+});
+
+
+
+
+/**
+ * replaces `postcss-clamp`
+ */
 test('Should convert clamp', (t) => {
   t.plan(1);
 
@@ -103,6 +152,9 @@ test('Should convert clamp', (t) => {
     .then((result) => t.is(result.css, 'body{width:max(10px,min(4em,80px))}'));
 });
 
+/**
+ * replaces `postcss-multi-value-display`
+ */
 test('Should convert multi value display', (t) => {
   t.plan(1);
 
@@ -112,6 +164,9 @@ test('Should convert multi value display', (t) => {
     .then((result) => t.is(result.css, 'body{display:block}'));
 });
 
+/**
+ * replaces `postcss-overflow-shorthand`
+ */
 test('Should convert overflow shorthand', (t) => {
   t.plan(1);
 
@@ -123,6 +178,9 @@ test('Should convert overflow shorthand', (t) => {
     );
 });
 
+/**
+ * replaces `postcss-place`
+ */
 test('Should convert alignment shorthand', (t) => {
   t.plan(1);
 
@@ -139,6 +197,9 @@ test('Should convert alignment shorthand', (t) => {
     );
 });
 
+/**
+ * replaces `postcss-double-position-gradients`
+ */
 test('Should convert double position gradients', (t) => {
   t.plan(1);
 
@@ -155,6 +216,9 @@ test('Should convert double position gradients', (t) => {
     );
 });
 
+/**
+ * replaces `postcss-media-minmax`
+ */
 test('Should convert media query range', (t) => {
   t.plan(1);
 
@@ -167,6 +231,25 @@ test('Should convert media query range', (t) => {
       t.is(
         result.css,
         '@media screen and (min-width:500px) and (max-width:1200px){.bar{display:block}}'
+      )
+    );
+});
+
+/**
+ * replaces `postcss-nesting`
+ */
+ test('Should flatten nested selectors', (t) => {
+  t.plan(1);
+
+  return postcss()
+    .use(postcssParcelCss({ browsers: "edge 18", parcelCssOptions: { drafts: { nesting: true } } }))
+    .process(
+      '.foo { & .bar { display: block;}}'
+    )
+    .then((result) =>
+      t.is(
+        result.css,
+        '.foo .bar{display:block}'
       )
     );
 });

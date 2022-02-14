@@ -72,7 +72,6 @@ Some rows are marked as "Depends on browser config" which means that the `browse
 | `postcss-clamp`                     | Depends on browser config         |
 | `postcss-color-hex-alpha`           | Depends on browser config         |
 | `postcss-color-hsl`                 | Depends on browser config         |
-| `postcss-color-hwb`                 | Depends on browser config         |
 | `postcss-color-rgb`                 | Depends on browser config         |
 | `postcss-double-position-gradients` | Depends on browser config         |
 | `postcss-media-minmax`              | Depends on browser config         |
