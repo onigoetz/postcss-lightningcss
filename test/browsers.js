@@ -80,7 +80,7 @@ test('Should convert logical properties', (t) => {
  * `postcss-color-hwb` knows how to replace the comma separated hwb() syntax (CSS Level 3)
  * `@parcel/css` does the replacement for space separated hwb() syntax (CSS Level 4)
  */
-test('Should convert hwb colors', (t) => {
+test('Should convert space separated hwb colors', (t) => {
   t.plan(1);
 
   return postcss()
@@ -136,9 +136,6 @@ test('Should convert alpha hex codes', (t) => {
     .process('body { color: #9d9c; }')
     .then((result) => t.is(result.css, 'body{color:rgba(153,221,153,.8)}'));
 });
-
-
-
 
 /**
  * replaces `postcss-clamp`
@@ -250,6 +247,29 @@ test('Should convert media query range', (t) => {
       t.is(
         result.css,
         '.foo .bar{display:block}'
+      )
+    );
+});
+
+/**
+ * replaces `postcss-custom-media`
+ */
+ test('Should resolve custom media queries', (t) => {
+  t.plan(1);
+
+  return postcss()
+    .use(postcssParcelCss({ browsers: "edge 18", parcelCssOptions: { drafts: { customMedia: true } } }))
+    .process(
+      `@custom-media --small-viewport (max-width: 30em);
+
+      @media (--small-viewport) {
+        .foo { color: blue; }
+      }`
+    )
+    .then((result) =>
+      t.is(
+        result.css,
+        `@media (max-width:30em){.foo{color:#00f}}`
       )
     );
 });

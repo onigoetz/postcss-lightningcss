@@ -135,74 +135,74 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/css-darwin-arm64@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-darwin-arm64@npm:1.2.0"
+"@parcel/css-darwin-arm64@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-darwin-arm64@npm:1.3.1"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@parcel/css-darwin-x64@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-darwin-x64@npm:1.2.0"
+"@parcel/css-darwin-x64@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-darwin-x64@npm:1.3.1"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-arm-gnueabihf@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-linux-arm-gnueabihf@npm:1.2.0"
+"@parcel/css-linux-arm-gnueabihf@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-linux-arm-gnueabihf@npm:1.3.1"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-arm64-gnu@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-linux-arm64-gnu@npm:1.2.0"
+"@parcel/css-linux-arm64-gnu@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-linux-arm64-gnu@npm:1.3.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-arm64-musl@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-linux-arm64-musl@npm:1.2.0"
+"@parcel/css-linux-arm64-musl@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-linux-arm64-musl@npm:1.3.1"
   conditions: os=linux & cpu=arm64
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-x64-gnu@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-linux-x64-gnu@npm:1.2.0"
+"@parcel/css-linux-x64-gnu@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-linux-x64-gnu@npm:1.3.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-x64-musl@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-linux-x64-musl@npm:1.2.0"
+"@parcel/css-linux-x64-musl@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-linux-x64-musl@npm:1.3.1"
   conditions: os=linux & cpu=x64
   languageName: node
   linkType: hard
 
-"@parcel/css-win32-x64-msvc@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@parcel/css-win32-x64-msvc@npm:1.2.0"
+"@parcel/css-win32-x64-msvc@npm:1.3.1":
+  version: 1.3.1
+  resolution: "@parcel/css-win32-x64-msvc@npm:1.3.1"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
 "@parcel/css@npm:^1.0.1":
-  version: 1.2.0
-  resolution: "@parcel/css@npm:1.2.0"
+  version: 1.3.1
+  resolution: "@parcel/css@npm:1.3.1"
   dependencies:
-    "@parcel/css-darwin-arm64": 1.2.0
-    "@parcel/css-darwin-x64": 1.2.0
-    "@parcel/css-linux-arm-gnueabihf": 1.2.0
-    "@parcel/css-linux-arm64-gnu": 1.2.0
-    "@parcel/css-linux-arm64-musl": 1.2.0
-    "@parcel/css-linux-x64-gnu": 1.2.0
-    "@parcel/css-linux-x64-musl": 1.2.0
-    "@parcel/css-win32-x64-msvc": 1.2.0
+    "@parcel/css-darwin-arm64": 1.3.1
+    "@parcel/css-darwin-x64": 1.3.1
+    "@parcel/css-linux-arm-gnueabihf": 1.3.1
+    "@parcel/css-linux-arm64-gnu": 1.3.1
+    "@parcel/css-linux-arm64-musl": 1.3.1
+    "@parcel/css-linux-x64-gnu": 1.3.1
+    "@parcel/css-linux-x64-musl": 1.3.1
+    "@parcel/css-win32-x64-msvc": 1.3.1
     detect-libc: ^1.0.3
   dependenciesMeta:
     "@parcel/css-darwin-arm64":
@@ -221,7 +221,7 @@ __metadata:
       optional: true
     "@parcel/css-win32-x64-msvc":
       optional: true
-  checksum: 41e359bb1e0061e1b7554b78c413ca946f13c6d2202b73d0cd5b82c0a59799c63a58c7e9e2809b7643d37f0fb7a5e8a4222b265f8929339d4e1d1010198abc86
+  checksum: ac0fb20f406ee6907f7d46d67a358693e6cee7065df09ddea70eaf6a2d57736822f99f98ab35d19aca23bb06218d71a7f853ddd2791979a51a270df178f03983
   languageName: node
   linkType: hard
 
@@ -705,9 +705,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001286":
-  version: 1.0.30001311
-  resolution: "caniuse-lite@npm:1.0.30001311"
-  checksum: a96a2724db91f7d820d7c83d98d6d80f71f4ef5542fd9af49478e6f5057a92d61fbb6c2a2c151e13323c760c7d9f046f422a9b1ac77ab08dc2cacc62bd22f941
+  version: 1.0.30001312
+  resolution: "caniuse-lite@npm:1.0.30001312"
+  checksum: 753fb9ea1e02e999430b323a71b5acab5120f3b5fc0161b01669f54a3ef5c5296240b6ae9b79b12a3742e3aed216aa9ee3d5398a23c16d08625ccd376b79545d
   languageName: node
   linkType: hard
 
@@ -1100,9 +1100,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.4.17":
-  version: 1.4.68
-  resolution: "electron-to-chromium@npm:1.4.68"
-  checksum: d7654d07ab7c504a0683cf29715db227bdbd3e397ad3a41bad3d1e35e9f837447be2bc5dea54b3350d51be5c9c7b79756dcbe44903fbee5949d67d783e788acb
+  version: 1.4.69
+  resolution: "electron-to-chromium@npm:1.4.69"
+  checksum: d5d469a9360c7e847dea00fa60314a379ce10de0e0193e9bdcb0aa9979dec79a9c252aa3f5faf1825265a1f5b8d3fc15b46008a91887996b308b0907a27948d4
   languageName: node
   linkType: hard
 
@@ -2566,11 +2566,11 @@ __metadata:
   linkType: hard
 
 "minimatch@npm:^3.0.4":
-  version: 3.0.5
-  resolution: "minimatch@npm:3.0.5"
+  version: 3.1.1
+  resolution: "minimatch@npm:3.1.1"
   dependencies:
     brace-expansion: ^1.1.7
-  checksum: a3b84b426eafca947741b864502cee02860c4e7b145de11ad98775cfcf3066fef422583bc0ffce0952ddf4750c1ccf4220b1556430d4ce10139f66247d87d69e
+  checksum: e9e3772e4ea06ea3a888d39bc7690d3c812ee7e5a70c2d2f568ccadac0249a027f865589d19ad03ed937e6ca3b4ad35f85411db9670f7877d8fc2ed452f1cd37
   languageName: node
   linkType: hard
 
