@@ -1,9 +1,8 @@
 const test = require('ava');
 const postcss = require('postcss');
 const postcssScss = require('postcss-scss');
-const postcssAdvancedVariables = require("@knagis/postcss-advanced-variables");
+const postcssAdvancedVariables = require('@knagis/postcss-advanced-variables');
 const postcssParcelCss = require('../src/index.js');
-const fs = require('fs');
 
 const inputCSS1 = `$dir: assets/icons;
 
@@ -25,14 +24,14 @@ const minifiedCSS1 = `.icon-foo{background:url(assets/icons/foo.png)}.icon-bar{b
 /*# sourceMappingURL=input.css.map */`;
 const minifiedSourceMap1 = {
   version: 3,
-  sources: [ 'input.css' ],
+  sources: ['input.css'],
   names: [],
   mappings: 'AAGE,UAAA,oCAAA,CAAA,UAAA,oCAAA,CAAA,UAAA,oCAAA,CAOE,OAAA,SAAA,CAAA,OAAA,SAAA',
   file: 'input.css',
   sourcesContent: [
     inputCSS1 // The sourceContent in the sourcemap should be the original source
   ]
-}
+};
 
 test('Should not add a sourcemap when nothing is specified', (t) => {
   t.plan(1);
@@ -57,7 +56,7 @@ test('Should not add a sourcemap when disabled', (t) => {
     .use(postcssParcelCss())
     .process(
       '.test { color: #ff0000; padding: 2px; padding-right: 3em; }',
-      {map: false}
+      { map: false }
     )
     .then((result) =>
       t.is(
@@ -73,7 +72,7 @@ test('should remap the sourcemap to the original file', (t) => {
   return postcss()
     .use(postcssAdvancedVariables())
     .use(postcssParcelCss())
-    .process(inputCSS1, {from: "input.css", parser: postcssScss, map: { inline: false }})
+    .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: { inline: false } })
     .then((result) => {
       // Debugging
       // Source maps can be checked in https://evanw.github.io/source-map-visualization/ or https://sokra.github.io/source-map-visualization/

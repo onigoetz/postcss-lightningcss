@@ -1,15 +1,15 @@
-const browserslist = require("browserslist");
-const css = require("@parcel/css");
-const remapping = require("@ampproject/remapping");
+const browserslist = require('browserslist');
+const css = require('@parcel/css');
+const remapping = require('@ampproject/remapping');
 
 const defaultParcelCssOptions = {
-  minify: true,
+  minify: true
 };
 
-function parcelCssPlugin(partialOptions = {}) {
+function parcelCssPlugin (partialOptions = {}) {
   const parcelCssOptions = {
     ...defaultParcelCssOptions,
-    ...(partialOptions.parcelCssOptions || {}),
+    ...(partialOptions.parcelCssOptions || {})
   };
 
   // @parcel/css uses a custom syntax to declare supported browsers
@@ -21,19 +21,19 @@ function parcelCssPlugin(partialOptions = {}) {
   }
 
   return {
-    postcssPlugin: "postcss-parcel-css",
-    OnceExit(root, { result, postcss }) {
+    postcssPlugin: 'postcss-parcel-css',
+    OnceExit (root, { result, postcss }) {
       // Infer sourcemaps options from postcss
       const map = result.opts.map;
 
       const options = {
-        filename: root.source.file || "",
+        filename: root.source.file || '',
         sourceMap: !!map,
-        ...parcelCssOptions,
+        ...parcelCssOptions
       };
 
       const intermediateResult = root.toResult({
-        map: map ? { annotation: false, inline: false } : false,
+        map: map ? { annotation: false, inline: false } : false
       });
 
       options.code = Buffer.from(intermediateResult.css);
@@ -59,7 +59,7 @@ function parcelCssPlugin(partialOptions = {}) {
         map
           ? `${res.code.toString()}\n/*# sourceMappingURL=data:application/json;base64,${Buffer.from(
               prev
-            ).toString("base64")} */`
+            ).toString('base64')} */`
           : res.code.toString(),
         {
           // TODO :: should we pass more options ?
@@ -67,7 +67,7 @@ function parcelCssPlugin(partialOptions = {}) {
           map
         }
       );
-    },
+    }
   };
 }
 

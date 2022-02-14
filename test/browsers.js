@@ -235,11 +235,11 @@ test('Should convert media query range', (t) => {
 /**
  * replaces `postcss-nesting`
  */
- test('Should flatten nested selectors', (t) => {
+test('Should flatten nested selectors', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: "edge 18", parcelCssOptions: { drafts: { nesting: true } } }))
+    .use(postcssParcelCss({ browsers: 'edge 18', parcelCssOptions: { drafts: { nesting: true } } }))
     .process(
       '.foo { & .bar { display: block;}}'
     )
@@ -254,11 +254,11 @@ test('Should convert media query range', (t) => {
 /**
  * replaces `postcss-custom-media`
  */
- test('Should resolve custom media queries', (t) => {
+test('Should resolve custom media queries', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: "edge 18", parcelCssOptions: { drafts: { customMedia: true } } }))
+    .use(postcssParcelCss({ browsers: 'edge 18', parcelCssOptions: { drafts: { customMedia: true } } }))
     .process(
       `@custom-media --small-viewport (max-width: 30em);
 
@@ -269,7 +269,7 @@ test('Should convert media query range', (t) => {
     .then((result) =>
       t.is(
         result.css,
-        `@media (max-width:30em){.foo{color:#00f}}`
+        '@media (max-width:30em){.foo{color:#00f}}'
       )
     );
 });
