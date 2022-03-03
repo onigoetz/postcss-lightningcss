@@ -64,32 +64,43 @@ The detailed list of `parcelCssOptions` can be found [here](https://github.com/p
 ## About source maps
 
 Source maps will pass through `@parcel/css`.
-But many mappings will be lost in translation; __`@parcel/css` creates only a source map for selectors__.
+But many mappings will be lost in translation; **`@parcel/css` creates only a source map for selectors**.
 Mappings for properties cannot be re-created after this transformation.
 
 ## PostCSS plugins that you can remove if you have `@parcel/css`
 
 The rows marked as "Depends on browser config" will convert your CSS only if:
+
 1. You set the `browsers` or `parcelCssOptions.targets` options
 2. one of the target browsers doesn't support the feature
 
-| PostCSS Plugin                      | @parcel/css option                    |
-| ----------------------------------- | ------------------------------------- |
-| `autoprefixer`                      | Depends on browser config             |
-| `postcss-clamp`                     | Depends on browser config             |
-| `postcss-color-hex-alpha`           | Depends on browser config             |
-| `postcss-color-hsl`                 | Depends on browser config             |
-| `postcss-color-rgb`                 | Depends on browser config             |
-| `postcss-custom-media`              | `parcelCssOptions.drafts.customMedia` |
-| `postcss-double-position-gradients` | Depends on browser config             |
-| `postcss-media-minmax`              | Depends on browser config             |
-| `postcss-multi-value-display`       | Depends on browser config             |
-| `postcss-nesting`                   | `parcelCssOptions.drafts.nesting`     |
-| `postcss-overflow-shorthand`        | Depends on browser config             |
-| `postcss-place`                     | Depends on browser config             |
-| `postcss-logical`                   | Depends on browser config (1)         |
+| PostCSS Plugin                          | @parcel/css option                    |
+| --------------------------------------- | ------------------------------------- |
+| `autoprefixer`                          | Depends on browser config             |
+| `postcss-clamp`                         | Depends on browser config             |
+| `postcss-color-hex-alpha`               | Depends on browser config             |
+| `postcss-color-hsl`                     | Depends on browser config             |
+| `postcss-color-rgb`                     | Depends on browser config             |
+| `postcss-color-function`                | Depends on browser config             |
+| `postcss-color-rebeccapurple`           | Depends on browser config             |
+| `postcss-custom-media`                  | `parcelCssOptions.drafts.customMedia` |
+| `postcss-double-position-gradients`     | Depends on browser config             |
+| `postcss-hwb-function`                  | Depends on browser config             |
+| `postcss-lab-function`                  | Depends on browser config             |
+| `postcss-logical`                       | Depends on browser config (1)         |
+| `postcss-media-minmax`                  | Depends on browser config             |
+| `postcss-multi-value-display`           | Depends on browser config             |
+| `postcss-nesting`                       | `parcelCssOptions.drafts.nesting`     |
+| `postcss-normalize-display-values`      | Depends on browser config             |
+| `postcss-oklab-function`                | Depends on browser config             |
+| `postcss-overflow-shorthand`            | Depends on browser config             |
+| `postcss-place`                         | Depends on browser config             |
+| `postcss-progressive-custom-properties` | Depends on browser config (2)         |
 
 1. `@parcel/css` doesn't support the [`logical` shorthand keyword](https://drafts.csswg.org/css-logical/#logical-shorthand-keyword) as its syntax is likely to change
+2. Progressive custom properties works only if the properties don't contain properties themselves:
+  - `lab(29.2345% 39.3825 20.0664)` has a proper fallback
+  - `oklch(40% 0.234 0.39 / var(--opacity-50))` will not have a fallback
 
 ## License
 
