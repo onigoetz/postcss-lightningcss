@@ -55,18 +55,27 @@ function parcelCssPlugin (partialOptions = {}) {
         prev = res.map.toString();
       }
 
-      result.root = postcss.parse(
-        map
-          ? `${res.code.toString()}\n/*# sourceMappingURL=data:application/json;base64,${Buffer.from(
-              prev
-            ).toString('base64')} */`
-          : res.code.toString(),
-        {
-          // TODO :: should we pass more options ?
-          from: result.opts.from,
-          map
+      let code = res.code.toString();
+
+      // https://postcss.org/api/#sourcemapoptions
+      if (map) {
+        if (typeof map === 'object') {
+          map.prev = prev;
+        } else {
+          // `map` was set to a boolean true
+          // Which means that the sourcemap is output as inline
+          // the only way to keep it as inline is to inline it in the input
+          code = `${code}\n/*# sourceMappingURL=data:application/json;base64,${Buffer.from(
+            prev
+          ).toString('base64')} */`;
         }
-      );
+      }
+
+      result.root = postcss.parse(code, {
+        // TODO :: should we pass more options ?
+        from: result.opts.from,
+        map
+      });
     }
   };
 }

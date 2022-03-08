@@ -20,8 +20,7 @@ const inputCSS1 = `$dir: assets/icons;
   }
 }
 `;
-const minifiedCSS1 = `.icon-foo{background:url(assets/icons/foo.png)}.icon-bar{background:url(assets/icons/bar.png)}.icon-baz{background:url(assets/icons/baz.png)}.col-3{width:30%}.col-5{width:50%}
-/*# sourceMappingURL=input.css.map */`;
+const minifiedCSS1 = '.icon-foo{background:url(assets/icons/foo.png)}.icon-bar{background:url(assets/icons/bar.png)}.icon-baz{background:url(assets/icons/baz.png)}.col-3{width:30%}.col-5{width:50%}';
 const minifiedSourceMap1 = {
   version: 3,
   sources: ['input.css'],
@@ -98,5 +97,41 @@ test('should remap the sourcemap to the original file', (t) => {
 
       t.is(result.css, minifiedCSS1);
       t.deepEqual(result.map.toJSON(), minifiedSourceMap1);
+    });
+});
+
+test('should remap the sourcemap to the original file, inline sourcemaps', (t) => {
+  t.plan(2);
+
+  return postcss()
+    .use(postcssAdvancedVariables())
+    .use(postcssParcelCss())
+    .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: { inline: true } })
+    .then((result) => {
+      t.is(result.css.split('\n')[0], minifiedCSS1);
+
+      // Extract the sourcemap for comparison
+      const sourcemapComment = result.css.split('\n')[1];
+      const base64 = sourcemapComment.split(';base64,')[1].split(' ')[0];
+
+      t.deepEqual(JSON.parse(atob(base64)), minifiedSourceMap1);
+    });
+});
+
+test('should remap the sourcemap to the original file, boolean option', (t) => {
+  t.plan(2);
+
+  return postcss()
+    .use(postcssAdvancedVariables())
+    .use(postcssParcelCss())
+    .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: true })
+    .then((result) => {
+      t.is(result.css.split('\n')[0], minifiedCSS1);
+
+      // Extract the sourcemap for comparison
+      const sourcemapComment = result.css.split('\n')[1];
+      const base64 = sourcemapComment.split(';base64,')[1].split(' ')[0];
+
+      t.deepEqual(JSON.parse(atob(base64)), minifiedSourceMap1);
     });
 });
