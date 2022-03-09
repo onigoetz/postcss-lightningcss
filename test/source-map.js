@@ -114,7 +114,7 @@ test('should remap the sourcemap to the original file, inline sourcemaps', (t) =
       const sourcemapComment = result.css.split('\n')[1];
       const base64 = sourcemapComment.split(';base64,')[1].split(' ')[0];
 
-      t.deepEqual(JSON.parse(atob(base64)), minifiedSourceMap1);
+      t.deepEqual(JSON.parse(Buffer.from(base64, 'base64')), minifiedSourceMap1);
     });
 });
 
@@ -132,6 +132,6 @@ test('should remap the sourcemap to the original file, boolean option', (t) => {
       const sourcemapComment = result.css.split('\n')[1];
       const base64 = sourcemapComment.split(';base64,')[1].split(' ')[0];
 
-      t.deepEqual(JSON.parse(atob(base64)), minifiedSourceMap1);
+      t.deepEqual(JSON.parse(Buffer.from(base64, 'base64')), minifiedSourceMap1);
     });
 });
