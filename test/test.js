@@ -7,7 +7,7 @@ const postcssParcelCss = require('../src/index.js');
 
 const css1 =
   '.a { color: #ff0000; } @media all { .b { color: rgba(255, 0, 0, 1) } }';
-const minified1 = '.a{color:red}@media all{.b{color:red}}';
+const minified1 = '.a{color:red}.b{color:red}';
 
 test('works as a postcss plugin via .use()', (t) => {
   t.plan(1);
@@ -60,7 +60,7 @@ test('error handling: @parcel/css error', async (t) => {
   t.is(error.name, 'SyntaxError');
   t.is(
     error.message,
-    'Invalid empty selector.'
+    'Invalid empty selector'
   );
   t.is(error.loc.line, 1);
   t.is(error.loc.column, 1);

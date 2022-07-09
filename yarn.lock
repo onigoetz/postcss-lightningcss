@@ -5,15 +5,6 @@ __metadata:
   version: 6
   cacheKey: 8
 
-"@ampproject/remapping@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "@ampproject/remapping@npm:2.1.1"
-  dependencies:
-    "@jridgewell/trace-mapping": ^0.3.0
-  checksum: cc5cf29833e2b8bdf420821a6e027a35cf6a48605df64ae5095b55cb722581b236554fc8f920138e6da3f7a99ec99273b07ebe2e2bb98b6a4a8d8e33648cac77
-  languageName: node
-  linkType: hard
-
 "@babel/code-frame@npm:7.12.11":
   version: 7.12.11
   resolution: "@babel/code-frame@npm:7.12.11"
@@ -118,16 +109,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/trace-mapping@npm:^0.3.0":
-  version: 0.3.4
-  resolution: "@jridgewell/trace-mapping@npm:0.3.4"
-  dependencies:
-    "@jridgewell/resolve-uri": ^3.0.3
-    "@jridgewell/sourcemap-codec": ^1.4.10
-  checksum: ab8bce84bbbc8c34f3ba8325ed926f8f2d3098983c10442a80c55764c4eb6e47d5b92d8ff20a0dd868c3e76a3535651fd8a0138182c290dbfc8396195685c37b
-  languageName: node
-  linkType: hard
-
 "@jridgewell/trace-mapping@npm:^0.3.7":
   version: 0.3.7
   resolution: "@jridgewell/trace-mapping@npm:0.3.7"
@@ -196,74 +177,74 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@parcel/css-darwin-arm64@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-darwin-arm64@npm:1.3.1"
+"@parcel/css-darwin-arm64@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-darwin-arm64@npm:1.11.2"
   conditions: os=darwin & cpu=arm64
   languageName: node
   linkType: hard
 
-"@parcel/css-darwin-x64@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-darwin-x64@npm:1.3.1"
+"@parcel/css-darwin-x64@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-darwin-x64@npm:1.11.2"
   conditions: os=darwin & cpu=x64
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-arm-gnueabihf@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-linux-arm-gnueabihf@npm:1.3.1"
+"@parcel/css-linux-arm-gnueabihf@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-linux-arm-gnueabihf@npm:1.11.2"
   conditions: os=linux & cpu=arm
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-arm64-gnu@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-linux-arm64-gnu@npm:1.3.1"
-  conditions: os=linux & cpu=arm64
+"@parcel/css-linux-arm64-gnu@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-linux-arm64-gnu@npm:1.11.2"
+  conditions: os=linux & cpu=arm64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-arm64-musl@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-linux-arm64-musl@npm:1.3.1"
-  conditions: os=linux & cpu=arm64
+"@parcel/css-linux-arm64-musl@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-linux-arm64-musl@npm:1.11.2"
+  conditions: os=linux & cpu=arm64 & libc=musl
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-x64-gnu@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-linux-x64-gnu@npm:1.3.1"
-  conditions: os=linux & cpu=x64
+"@parcel/css-linux-x64-gnu@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-linux-x64-gnu@npm:1.11.2"
+  conditions: os=linux & cpu=x64 & libc=glibc
   languageName: node
   linkType: hard
 
-"@parcel/css-linux-x64-musl@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-linux-x64-musl@npm:1.3.1"
-  conditions: os=linux & cpu=x64
+"@parcel/css-linux-x64-musl@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-linux-x64-musl@npm:1.11.2"
+  conditions: os=linux & cpu=x64 & libc=musl
   languageName: node
   linkType: hard
 
-"@parcel/css-win32-x64-msvc@npm:1.3.1":
-  version: 1.3.1
-  resolution: "@parcel/css-win32-x64-msvc@npm:1.3.1"
+"@parcel/css-win32-x64-msvc@npm:1.11.2":
+  version: 1.11.2
+  resolution: "@parcel/css-win32-x64-msvc@npm:1.11.2"
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
 
-"@parcel/css@npm:^1.0.1":
-  version: 1.3.1
-  resolution: "@parcel/css@npm:1.3.1"
+"@parcel/css@npm:^1.11.0":
+  version: 1.11.2
+  resolution: "@parcel/css@npm:1.11.2"
   dependencies:
-    "@parcel/css-darwin-arm64": 1.3.1
-    "@parcel/css-darwin-x64": 1.3.1
-    "@parcel/css-linux-arm-gnueabihf": 1.3.1
-    "@parcel/css-linux-arm64-gnu": 1.3.1
-    "@parcel/css-linux-arm64-musl": 1.3.1
-    "@parcel/css-linux-x64-gnu": 1.3.1
-    "@parcel/css-linux-x64-musl": 1.3.1
-    "@parcel/css-win32-x64-msvc": 1.3.1
+    "@parcel/css-darwin-arm64": 1.11.2
+    "@parcel/css-darwin-x64": 1.11.2
+    "@parcel/css-linux-arm-gnueabihf": 1.11.2
+    "@parcel/css-linux-arm64-gnu": 1.11.2
+    "@parcel/css-linux-arm64-musl": 1.11.2
+    "@parcel/css-linux-x64-gnu": 1.11.2
+    "@parcel/css-linux-x64-musl": 1.11.2
+    "@parcel/css-win32-x64-msvc": 1.11.2
     detect-libc: ^1.0.3
   dependenciesMeta:
     "@parcel/css-darwin-arm64":
@@ -282,7 +263,7 @@ __metadata:
       optional: true
     "@parcel/css-win32-x64-msvc":
       optional: true
-  checksum: ac0fb20f406ee6907f7d46d67a358693e6cee7065df09ddea70eaf6a2d57736822f99f98ab35d19aca23bb06218d71a7f853ddd2791979a51a270df178f03983
+  checksum: dc77084b4ad79bf6986c6f50d80a539fcbf7059130f4225a774d6915de95505211108b6f228278785364096cd64e10fa60312fb382aed8e52a51f8ce53cb9162
   languageName: node
   linkType: hard
 
@@ -3175,9 +3156,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "postcss-parcel-css@workspace:."
   dependencies:
-    "@ampproject/remapping": ^2.1.1
     "@knagis/postcss-advanced-variables": 4.0.0
-    "@parcel/css": ^1.0.1
+    "@parcel/css": ^1.11.0
     ava: 4.3.0
     browserslist: ^4.19.1
     c8: 7.11.3

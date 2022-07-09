@@ -1,10 +1,15 @@
 const browserslist = require('browserslist');
 const css = require('@parcel/css');
-const remapping = require('@ampproject/remapping');
+
+const SOURCEMAP_COMMENT = "sourceMappingURL=data:application/json;base64";
 
 const defaultParcelCssOptions = {
   minify: true
 };
+
+function toBase64(content) {
+  return Buffer.from(content).toString('base64');
+}
 
 function parcelCssPlugin (partialOptions = {}) {
   const parcelCssOptions = {
@@ -33,41 +38,27 @@ function parcelCssPlugin (partialOptions = {}) {
       };
 
       const intermediateResult = root.toResult({
-        map: map ? { annotation: false, inline: false } : false
+        map: map ? { inline: true } : false
       });
 
       options.code = Buffer.from(intermediateResult.css);
 
       const res = css.transform(options);
 
-      // If we have a source map from PostCSS and @parcel/css
-      // we can merge the two together to get the original positions
-      let prev = null;
-      if (res.map != null && intermediateResult.map != null) {
-        const remapped = remapping(
-          [res.map.toString(), intermediateResult.map.toString()],
-          () => null
-        );
-
-        prev = remapped.toString();
-      } else if (res.map != null) {
-        // If we only have the source map from @parcel/css we'll at least use that
-        prev = res.map.toString();
-      }
-
       let code = res.code.toString();
 
       // https://postcss.org/api/#sourcemapoptions
-      if (map) {
+      if (map && res.map != null) {
+        // If @parcel/css returned a map we'll use it
+        const prev = res.map.toString();
+
         if (typeof map === 'object') {
           map.prev = prev;
         } else {
           // `map` was set to a boolean true
           // Which means that the sourcemap is output as inline
           // the only way to keep it as inline is to inline it in the input
-          code = `${code}\n/*# sourceMappingURL=data:application/json;base64,${Buffer.from(
-            prev
-          ).toString('base64')} */`;
+          code = `${code}\n/*# ${SOURCEMAP_COMMENT},${toBase64(prev)} */`;
         }
       }
 
