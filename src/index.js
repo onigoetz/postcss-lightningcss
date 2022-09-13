@@ -1,13 +1,13 @@
 const browserslist = require('browserslist');
 const css = require('lightningcss');
 
-const SOURCEMAP_COMMENT = "sourceMappingURL=data:application/json;base64";
+const SOURCEMAP_COMMENT = 'sourceMappingURL=data:application/json;base64';
 
 const defaultLightningcssOptions = {
   minify: true
 };
 
-function toBase64(content) {
+function toBase64 (content) {
   return Buffer.from(content).toString('base64');
 }
 
