@@ -3,7 +3,7 @@
 const test = require('ava');
 const postcss = require('postcss');
 const postcssNested = require('postcss-nested');
-const postcssParcelCss = require('../src/index.js');
+const postcssLightningcss = require('../src/index.js');
 
 const css1 =
   '.a { color: #ff0000; } @media all { .b { color: rgba(255, 0, 0, 1) } }';
@@ -13,7 +13,7 @@ test('works as a postcss plugin via .use()', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss())
+    .use(postcssLightningcss())
     .process(css1)
     .then((result) => t.is(result.css, minified1));
 });
@@ -21,14 +21,14 @@ test('works as a postcss plugin via .use()', (t) => {
 test('works as a postcss plugin via postcss([..]) w/o config', (t) => {
   t.plan(1);
 
-  return postcss([postcssParcelCss])
+  return postcss([postcssLightningcss])
     .process(css1)
     .then((result) => t.is(result.css, minified1));
 });
 test('works as a postcss plugin via postcss([..]) w/ config', (t) => {
   t.plan(1);
 
-  return postcss([postcssParcelCss({})])
+  return postcss([postcssLightningcss({})])
     .process(css1)
     .then((result) => t.is(result.css, minified1));
 });
@@ -37,13 +37,13 @@ test('edge cases: should process empty', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss)
+    .use(postcssLightningcss)
     .process('')
     .then((result) => t.is(result.css, ''));
 });
 
 test('error handling: postcss error', async (t) => {
-  const error = await t.throwsAsync(postcss([postcssParcelCss]).process('.test { color }'));
+  const error = await t.throwsAsync(postcss([postcssLightningcss]).process('.test { color }'));
 
   t.is(error.name, 'CssSyntaxError');
   t.is(
@@ -54,8 +54,8 @@ test('error handling: postcss error', async (t) => {
   t.is(error.column, 9);
 });
 
-test('error handling: @parcel/css error', async (t) => {
-  const error = await t.throwsAsync(postcss([postcssParcelCss]).process('{foo:1}'));
+test('error handling: lightningcss error', async (t) => {
+  const error = await t.throwsAsync(postcss([postcssLightningcss]).process('{foo:1}'));
 
   t.is(error.name, 'SyntaxError');
   t.is(
@@ -66,18 +66,18 @@ test('error handling: @parcel/css error', async (t) => {
   t.is(error.loc.column, 1);
 });
 
-// TODO :: postcss-nested is embedded inside @parcel/css
+// TODO :: postcss-nested is embedded inside lightningcss
 // we should try to find other postcss plugins to test with
 test('should work with postcss-nested', (t) => {
   t.plan(1);
 
-  return postcss([postcssNested, postcssParcelCss])
+  return postcss([postcssNested, postcssLightningcss])
     .process('.c { .touch &:hover { color: #ff0000; } }')
     .then((result) => t.is(result.css, '.touch .c:hover{color:red}'));
 });
 
 const tests = [
-  // TODO :: re-enable after https://github.com/parcel-bundler/parcel-css/issues/43
+  // TODO :: re-enable after https://github.com/parcel-bundler/lightningcss/issues/43
   // ["/* before */ rule { c: 1 } /*! after */", "rule{c:1}\n/*! after */"],
   // [
   //  `/* before */
@@ -94,7 +94,7 @@ const tests = [
     '.super-super-super-super-super-long-selector{color:#00f;padding:4px}.super-super-super-super-super-long-selector,.b{color:red}'
   ],
   // TODO :: invalid syntax isn't supported yet
-  // https://github.com/parcel-bundler/parcel-css/issues/39
+  // https://github.com/parcel-bundler/lightningcss/issues/39
   /* [
     ".super-super-super-super-super-long-selector { padding: 4px; color: blue } .super-super-super-super-super-long-selector, .b { color: red !ie }",
     ".super-super-super-super-super-long-selector{padding:4px;color:red!ie}.b{color:red!ie}"
@@ -119,7 +119,7 @@ const tests = [
 for (const [input, expected] of tests) {
   test(`ast transformations: ${input}`, (t) => {
     t.plan(1);
-    return postcss([postcssParcelCss({ forceMediaMerge: true })])
+    return postcss([postcssLightningcss({ forceMediaMerge: true })])
       .process(input)
       .then((result) => t.is(result.css, expected));
   });

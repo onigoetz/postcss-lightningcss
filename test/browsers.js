@@ -1,6 +1,6 @@
 const test = require('ava');
 const postcss = require('postcss');
-const postcssParcelCss = require('../src/index.js');
+const postcssLightningcss = require('../src/index.js');
 
 const css1 = `.foo {
     background: yellow;
@@ -22,7 +22,7 @@ test('Should not remove prefixes without a list of browsers', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss())
+    .use(postcssLightningcss())
     .process(css1)
     .then((result) => t.is(result.css, minified1));
 });
@@ -34,7 +34,7 @@ test('Should remove prefixes when browsers are set', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'chrome 95' }))
+    .use(postcssLightningcss({ browsers: 'chrome 95' }))
     .process(css1)
     .then((result) => t.is(result.css, minified2));
 });
@@ -47,7 +47,7 @@ test('Should remove prefixes when targets are set', (t) => {
 
   return postcss()
     .use(
-      postcssParcelCss({ parcelCssOptions: { targets: { chrome: 6225920 } } })
+      postcssLightningcss({ lightningcssOptions: { targets: { chrome: 6225920 } } })
     )
     .process(css1)
     .then((result) => t.is(result.css, minified2));
@@ -60,7 +60,7 @@ test('Should convert logical properties', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process(`.banner {
         color: #222222;
         inset: 0 5px 10px;
@@ -78,13 +78,13 @@ test('Should convert logical properties', (t) => {
 
 /*
  * `postcss-color-hwb` knows how to replace the comma separated hwb() syntax (CSS Level 3)
- * `@parcel/css` does the replacement for space separated hwb() syntax (CSS Level 4)
+ * `lightningcss` does the replacement for space separated hwb() syntax (CSS Level 4)
  */
 test('Should convert space separated hwb colors', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { color: hwb(90 0% 0% / 0.5); }')
     .then((result) => t.is(result.css, 'body{color:rgba(128,255,0,.5)}'));
 });
@@ -96,7 +96,7 @@ test('Should convert comma separated hsl colors', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { color: hsla(200grad, 100%, 50%, 20%); }')
     .then((result) => t.is(result.css, 'body{color:rgba(0,255,255,.2)}'));
 });
@@ -108,7 +108,7 @@ test('Should convert space separated hsl colors', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { color: hsl(200grad 100% 50% / 20%); }')
     .then((result) => t.is(result.css, 'body{color:rgba(0,255,255,.2)}'));
 });
@@ -120,7 +120,7 @@ test('Should convert space separated rgba colors', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { color: rgba(0 255 255 / 20%); }')
     .then((result) => t.is(result.css, 'body{color:rgba(0,255,255,.2)}'));
 });
@@ -132,7 +132,7 @@ test('Should convert alpha hex codes', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { color: #9d9c; }')
     .then((result) => t.is(result.css, 'body{color:rgba(153,221,153,.8)}'));
 });
@@ -144,7 +144,7 @@ test('Should convert clamp', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { width: clamp(10px, 4em, 80px); }')
     .then((result) => t.is(result.css, 'body{width:max(10px,min(4em,80px))}'));
 });
@@ -156,7 +156,7 @@ test('Should convert multi value display', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { display: block flow; }')
     .then((result) => t.is(result.css, 'body{display:block}'));
 });
@@ -168,7 +168,7 @@ test('Should convert overflow shorthand', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process('body { overflow: hidden auto; }')
     .then((result) =>
       t.is(result.css, 'body{overflow-x:hidden;overflow-y:auto}')
@@ -182,7 +182,7 @@ test('Should convert alignment shorthand', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process(
       '.example { place-self: center; place-content: space-between center; }'
     )
@@ -201,7 +201,7 @@ test('Should convert double position gradients', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process(
       'body { background-image: linear-gradient(90deg, black 25% 50%, blue 50% 75%); }'
     )
@@ -220,7 +220,7 @@ test('Should convert media query range', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18' }))
+    .use(postcssLightningcss({ browsers: 'edge 18' }))
     .process(
       '@media screen and (500px <= width <= 1200px) {.bar { display: block;}}'
     )
@@ -239,7 +239,7 @@ test('Should flatten nested selectors', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18', parcelCssOptions: { drafts: { nesting: true } } }))
+    .use(postcssLightningcss({ browsers: 'edge 18', lightningcssOptions: { drafts: { nesting: true } } }))
     .process(
       '.foo { & .bar { display: block;}}'
     )
@@ -258,7 +258,7 @@ test('Should resolve custom media queries', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss({ browsers: 'edge 18', parcelCssOptions: { drafts: { customMedia: true } } }))
+    .use(postcssLightningcss({ browsers: 'edge 18', lightningcssOptions: { drafts: { customMedia: true } } }))
     .process(
       `@custom-media --small-viewport (max-width: 30em);
 

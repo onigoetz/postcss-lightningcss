@@ -1,9 +1,9 @@
 const browserslist = require('browserslist');
-const css = require('@parcel/css');
+const css = require('lightningcss');
 
 const SOURCEMAP_COMMENT = "sourceMappingURL=data:application/json;base64";
 
-const defaultParcelCssOptions = {
+const defaultLightningcssOptions = {
   minify: true
 };
 
@@ -11,22 +11,22 @@ function toBase64(content) {
   return Buffer.from(content).toString('base64');
 }
 
-function parcelCssPlugin (partialOptions = {}) {
-  const parcelCssOptions = {
-    ...defaultParcelCssOptions,
-    ...(partialOptions.parcelCssOptions || {})
+function lightningcssPlugin (partialOptions = {}) {
+  const lightningcssOptions = {
+    ...defaultLightningcssOptions,
+    ...(partialOptions.lightningcssOptions || {})
   };
 
-  // @parcel/css uses a custom syntax to declare supported browsers
+  // lightningcss uses a custom syntax to declare supported browsers
   // the `browsers` option provides a helper to declare them with
   // a `browerslist` query
   if (partialOptions.browsers != null) {
     const browsers = browserslist(partialOptions.browsers);
-    parcelCssOptions.targets = css.browserslistToTargets(browsers);
+    lightningcssOptions.targets = css.browserslistToTargets(browsers);
   }
 
   return {
-    postcssPlugin: 'postcss-parcel-css',
+    postcssPlugin: 'postcss-lightningcss',
     OnceExit (root, { result, postcss }) {
       // Infer sourcemaps options from postcss
       const map = result.opts.map;
@@ -34,7 +34,7 @@ function parcelCssPlugin (partialOptions = {}) {
       const options = {
         filename: root.source.file || '',
         sourceMap: !!map,
-        ...parcelCssOptions
+        ...lightningcssOptions
       };
 
       const intermediateResult = root.toResult({
@@ -49,7 +49,7 @@ function parcelCssPlugin (partialOptions = {}) {
 
       // https://postcss.org/api/#sourcemapoptions
       if (map && res.map != null) {
-        // If @parcel/css returned a map we'll use it
+        // If lightningcss returned a map we'll use it
         const prev = res.map.toString();
 
         if (typeof map === 'object') {
@@ -71,6 +71,6 @@ function parcelCssPlugin (partialOptions = {}) {
   };
 }
 
-parcelCssPlugin.postcss = true;
+lightningcssPlugin.postcss = true;
 
-module.exports = parcelCssPlugin;
+module.exports = lightningcssPlugin;

@@ -2,7 +2,7 @@ const test = require('ava');
 const postcss = require('postcss');
 const postcssScss = require('postcss-scss');
 const postcssAdvancedVariables = require('@knagis/postcss-advanced-variables');
-const postcssParcelCss = require('../src/index.js');
+const postcssLightningcss = require('../src/index.js');
 
 const inputCSS1 = `$dir: assets/icons;
 
@@ -36,7 +36,7 @@ test('Should not add a sourcemap when nothing is specified', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss())
+    .use(postcssLightningcss())
     .process(
       '.test { color: #ff0000; padding: 2px; padding-right: 3em; }'
     )
@@ -52,7 +52,7 @@ test('Should not add a sourcemap when disabled', (t) => {
   t.plan(1);
 
   return postcss()
-    .use(postcssParcelCss())
+    .use(postcssLightningcss())
     .process(
       '.test { color: #ff0000; padding: 2px; padding-right: 3em; }',
       { map: false }
@@ -70,7 +70,7 @@ test('should remap the sourcemap to the original file', (t) => {
 
   return postcss()
     .use(postcssAdvancedVariables())
-    .use(postcssParcelCss())
+    .use(postcssLightningcss())
     .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: { inline: false } })
     .then((result) => {
       // Debugging
@@ -105,7 +105,7 @@ test('should remap the sourcemap to the original file, inline sourcemaps', (t) =
 
   return postcss()
     .use(postcssAdvancedVariables())
-    .use(postcssParcelCss())
+    .use(postcssLightningcss())
     .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: { inline: true } })
     .then((result) => {
       t.is(result.css.split('\n')[0], minifiedCSS1);
@@ -123,7 +123,7 @@ test('should remap the sourcemap to the original file, boolean option', (t) => {
 
   return postcss()
     .use(postcssAdvancedVariables())
-    .use(postcssParcelCss())
+    .use(postcssLightningcss())
     .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: true })
     .then((result) => {
       t.is(result.css.split('\n')[0], minifiedCSS1);
