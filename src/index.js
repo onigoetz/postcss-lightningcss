@@ -34,10 +34,16 @@ function lightningcssPlugin (partialOptions = {}) {
       // Infer sourcemaps options from postcss
       const map = result.opts.map;
 
+      const filename = (root.source && root.source.input.file) || ''
+      const cssModules = typeof lightningcssOptions.cssModules === 'boolean'
+        ? lightningcssOptions.cssModules
+        : partialOptions.cssModulesRE && partialOptions.cssModulesRE.test(filename)
+
       const options = {
-        filename: (root.source && root.source.input.file) || '',
+        filename,
         sourceMap: !!map,
-        ...lightningcssOptions
+        ...lightningcssOptions,
+        cssModules
       };
 
       const intermediateResult = root.toResult({

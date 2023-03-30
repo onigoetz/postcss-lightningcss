@@ -31,6 +31,9 @@ postcssLightningcss({
   // Use a browserslist query that will inform which browsers are supported
   // Will add or remove vendor prefixes that are needed or not anymore
   browsers: ">= .25%",
+  // Auto set cssModules to true if the file matches this regex
+  // Will be overriden by the lightningcssOptions cssModules(boolean) option
+  cssModulesRe: /\.module\.css/,
   // Will pass all options to lightningcss
   // Check out their documentation for details:
   // https://www.npmjs.com/package/lightningcss#user-content-documentation
