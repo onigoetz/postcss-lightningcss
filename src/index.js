@@ -11,6 +11,9 @@ function toBase64 (content) {
   return Buffer.from(content).toString('base64');
 }
 
+/**
+ * @returns {import('postcss').Plugin}
+ */
 function lightningcssPlugin (partialOptions = {}) {
   const lightningcssOptions = {
     ...defaultLightningcssOptions,
@@ -32,7 +35,7 @@ function lightningcssPlugin (partialOptions = {}) {
       const map = result.opts.map;
 
       const options = {
-        filename: root.source.file || '',
+        filename: (root.source && root.source.input.file) || '',
         sourceMap: !!map,
         ...lightningcssOptions
       };
