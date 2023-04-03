@@ -12,6 +12,9 @@ function toBase64 (content) {
 }
 
 /**
+ * @typedef {Object} LightningcssPluginOptions
+ * @property {boolean | RegExp | 'auto' | undefined} cssModules
+ * @param partialOptions {LightningcssPluginOptions}
  * @returns {import('postcss').Plugin}
  */
 function lightningcssPlugin (partialOptions = {}) {
@@ -35,9 +38,17 @@ function lightningcssPlugin (partialOptions = {}) {
       const map = result.opts.map;
 
       const filename = (root.source && root.source.input.file) || ''
-      const cssModules = typeof lightningcssOptions.cssModules === 'boolean'
+      let cssModules = typeof lightningcssOptions.cssModules === 'boolean'
         ? lightningcssOptions.cssModules
-        : partialOptions.cssModulesRE && partialOptions.cssModulesRE.test(filename)
+        : partialOptions.cssModules || false
+        
+      if (cssModules === 'auto') {
+        cssModules = /\.module(s)?\.\w+$/i
+      }
+      // Promise cssModules: boolean or RegExp
+      cssModules = typeof cssModules === 'boolean'
+        ? cssModules
+        : cssModules && cssModules.test(filename)
 
       const options = {
         filename,
