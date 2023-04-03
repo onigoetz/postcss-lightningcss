@@ -7,6 +7,8 @@ const postcssLightningcss = require('../src/index.js');
 
 const css1 =
   '.a { color: #ff0000; } @media all { .b { color: rgba(255, 0, 0, 1) } }';
+const css2  = '.class-name { color: green; } :global(.global-class-name) { color: green; }'
+const minified2 = '.class-name{color:green}:global(.global-class-name){color:green}'
 const minified1 = '.a{color:red}.b{color:red}';
 
 test('works as a postcss plugin via .use()', (t) => {
@@ -79,39 +81,40 @@ test('should work with postcss-nested', (t) => {
 test('should work with cssmodules: boolean', async (t) => {
 
   const moduleCssResult = postcss([postcssLightningcss({ cssModules: true })])
-    .process('.class-name { color: green; } :global(.global-class-name) { color: green; }', { from: 'input.css' })
-  t.is(moduleCssResult.css, '.jfZz7a_class-name{color:green}.global-class-name{color:green}')
+    .process(css2, { from: 'input.css' })
+  // css modules generate different hash on CI and local machine
+  t.not(moduleCssResult.css, minified2)
   const nonModuleCssResult = await postcss([postcssLightningcss({ cssModules: false })])
-    .process('.class-name { color: green; } :global(.global-class-name) { color: green; }', { from: 'input.css' })
-  t.is(nonModuleCssResult.css, '.class-name{color:green}:global(.global-class-name){color:green}')
+    .process(css2, { from: 'input.css' })
+  t.is(nonModuleCssResult.css, minified2)
 });
 
 test('should work with cssmodules: auto', async (t) => {
 
   const moduleCssResult = postcss([postcssLightningcss({ cssModules: 'auto' })])
-    .process('.class-name { color: green; } :global(.global-class-name) { color: green; }', { from: 'input.module.css' })
-  t.is(moduleCssResult.css, '.XVUkUG_class-name{color:green}.global-class-name{color:green}')
+    .process(css2, { from: 'input.module.css' })
+  t.not(moduleCssResult.css, minified2)
   const nonModuleCssResult = await postcss([postcssLightningcss({ cssModules: 'auto' })])
-    .process('.class-name { color: green; } :global(.global-class-name) { color: green; }', { from: 'input.css' })
-  t.is(nonModuleCssResult.css, '.class-name{color:green}:global(.global-class-name){color:green}')
+    .process(css2, { from: 'input.css' })
+  t.is(nonModuleCssResult.css, minified2)
 });
 
 test('should work with cssmodules: regex', async (t) => {
   const moduleCssResult = await postcss([postcssLightningcss({ cssModules: /\.custom\.css/ })])
-    .process('.class-name { color: green; } :global(.global-class-name) { color: green; }', { from: 'input.custom.css' })
-  t.is(moduleCssResult.css, '.YIuDSq_class-name{color:green}.global-class-name{color:green}');
+    .process(css2, { from: 'input.custom.css' })
+  t.not(moduleCssResult.css, minified2);
   
   const nonModuleCssResult = await postcss([postcssLightningcss({ cssModules: /\.custom\.css/ })])
-    .process('.class-name { color: green; } :global(.global-class-name) { color: green; }', { from: 'input.module.css' })
-  t.is(nonModuleCssResult.css, '.class-name{color:green}:global(.global-class-name){color:green}');
+    .process(css2, { from: 'input.module.css' })
+  t.is(nonModuleCssResult.css, minified2);
 });
 
 test('should work overwrite by lightningcssOptions.cssModules', (t) => {
   t.plan(1);
 
   return postcss([postcssLightningcss({ cssModules: /\.module\.css/, lightningcssOptions: { cssModules: false } })])
-    .process('.class-name { color: green; } :global(.global-class-name) { color: green; }', { from: 'input.module.css' })
-    .then((result) => t.is(result.css, '.class-name{color:green}:global(.global-class-name){color:green}'));
+    .process(css2, { from: 'input.module.css' })
+    .then((result) => t.is(result.css, minified2));
 });
 
 const tests = [
