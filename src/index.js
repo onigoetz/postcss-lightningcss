@@ -12,6 +12,9 @@ function toBase64 (content) {
 }
 
 /**
+ * @typedef {Object} LightningcssPluginOptions
+ * @property {boolean | RegExp | 'auto' | undefined} cssModules
+ * @param partialOptions {LightningcssPluginOptions}
  * @returns {import('postcss').Plugin}
  */
 function lightningcssPlugin (partialOptions = {}) {
@@ -34,10 +37,24 @@ function lightningcssPlugin (partialOptions = {}) {
       // Infer sourcemaps options from postcss
       const map = result.opts.map;
 
+      const filename = (root.source && root.source.input.file) || ''
+      let cssModules = typeof lightningcssOptions.cssModules === 'boolean'
+        ? lightningcssOptions.cssModules
+        : partialOptions.cssModules || false
+        
+      if (cssModules === 'auto') {
+        cssModules = /\.module(s)?\.\w+$/i
+      }
+      // Promise cssModules: boolean or RegExp
+      cssModules = typeof cssModules === 'boolean'
+        ? cssModules
+        : cssModules && cssModules.test(filename)
+
       const options = {
-        filename: (root.source && root.source.input.file) || '',
+        filename,
         sourceMap: !!map,
-        ...lightningcssOptions
+        ...lightningcssOptions,
+        cssModules
       };
 
       const intermediateResult = root.toResult({
