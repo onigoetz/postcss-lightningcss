@@ -39,7 +39,7 @@
     "postcss": "8.4.24",
     "postcss-nested": "6.0.1",
     "postcss-scss": "4.0.6",
-    "semistandard": "16.0.1"
+    "semistandard": "17.0.0"
   },
   "files": [
     "src"
