@@ -1,0 +1,34 @@
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+name: SonarCloud
+jobs:
+  sonarcloud:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        # Disabling shallow clone is recommended for improving relevancy of reporting
+        fetch-depth: 0
+    - name: Use Node.js
+      uses: actions/setup-node@v3.6.0
+      with:
+        node-version: v18.x
+    - id: node_path
+      run: echo "node=$(which node)" >> $GITHUB_OUTPUT
+    - name: Install
+      run: yarn install
+    - name: Test
+      run: yarn test:coverage
+    - name: SonarCloud Scan
+      uses: sonarsource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with: 
+        args: >
+          -Dsonar.nodejs.executable=${{ steps.node_path.outputs.node }}

@@ -17,7 +17,8 @@
   "license": "MIT",
   "main": "./src/index.js",
   "scripts": {
-    "test": "c8 --reporter=lcovonly --reporter=text ava",
+    "test": "ava",
+    "test:coverage": "c8 --reporter=lcovonly --reporter=text ava",
     "lint": "semistandard",
     "prepublishOnly": "yarn lint && yarn test"
   },

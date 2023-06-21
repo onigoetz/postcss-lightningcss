@@ -5,6 +5,23 @@ on:
     pull_request:
 
 jobs:
+
+  # Run linting only once
+  lint: 
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3.6.0
+      with:
+        node-version: 18.x
+        cache: 'yarn'
+    - name: Install
+      run: yarn install
+    - name: Lint
+      run: yarn lint
+
   build:
     strategy:
       matrix:
@@ -23,7 +40,5 @@ jobs:
         cache: 'yarn'
     - name: Install
       run: yarn install
-    - name: Lint
-      run: yarn lint
     - name: Test
       run: yarn test
