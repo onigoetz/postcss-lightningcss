@@ -29,4 +29,4 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with: 
         args: >
-          -X -Dsonar.nodejs.executable=${{ steps.node_path.outputs.node }}
+          -Dsonar.nodejs.executable=${{ steps.node_path.outputs.node }}
