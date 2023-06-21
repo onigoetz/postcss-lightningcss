@@ -1,5 +1,7 @@
 # postcss-lightningcss
 
+[![GitHub CI](https://github.com/onigoetz/postcss-lightningcss/actions/workflows/build.yml/badge.svg)](https://github.com/onigoetz/postcss-lightningcss) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=onigoetz_postcss-lightningcss&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=onigoetz_postcss-lightningcss) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=onigoetz_postcss-lightningcss&metric=coverage)](https://sonarcloud.io/summary/new_code?id=onigoetz_postcss-lightningcss)
+
 This PostCSS plugin uses [lightningcss](https://lightningcss.dev/) to compile and minify your CSS.
 
 `lightningcss` is more than a minifier as it can replace quite a few PostCSS plugins such as `autoprefixer`.
@@ -74,6 +76,8 @@ But many mappings will be lost in translation; **`lightningcss` creates only a s
 Mappings for properties cannot be re-created after this transformation.
 
 ## PostCSS plugins that you can remove if you have `lightningcss`
+
+> This list is not exhaustive, if you have a doubt, have a look at the [Lightning CSS Playground](https://lightningcss.dev/playground/index.html)
 
 The rows marked as "Depends on browser config" will convert your CSS only if:
 
