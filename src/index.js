@@ -1,8 +1,7 @@
 const css = require('lightningcss');
-const { prepareGlobalOptions, prepareOptions } = require("./options.js");
+const { prepareGlobalOptions, prepareOptions } = require('./options.js');
 
 const SOURCEMAP_COMMENT = 'sourceMappingURL=data:application/json;base64';
-
 
 function toBase64 (content) {
   return Buffer.from(content).toString('base64');
@@ -20,7 +19,6 @@ function lightningcssPlugin (partialOptions = {}) {
   return {
     postcssPlugin: 'postcss-lightningcss',
     OnceExit (root, { result, postcss }) {
-      
       const filename = (root.source && root.source.input.file) || '';
       // Infer sourcemaps options from postcss
       const map = result.opts.map;

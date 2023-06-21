@@ -1,14 +1,14 @@
-const browserslist = require("browserslist");
-const css = require("lightningcss");
+const browserslist = require('browserslist');
+const css = require('lightningcss');
 
 const defaultLightningcssOptions = {
-  minify: true,
+  minify: true
 };
 
-function prepareGlobalOptions(pluginOptions = {}) {
+function prepareGlobalOptions (pluginOptions = {}) {
   const lightningcssOptions = {
     ...defaultLightningcssOptions,
-    ...(pluginOptions.lightningcssOptions || {}),
+    ...(pluginOptions.lightningcssOptions || {})
   };
 
   // lightningcss uses a custom syntax to declare supported browsers
@@ -22,14 +22,14 @@ function prepareGlobalOptions(pluginOptions = {}) {
   return lightningcssOptions;
 }
 
-function setCssModulesOption(filename, options, pluginOptions) {
+function setCssModulesOption (filename, options, pluginOptions) {
   let cssModules = pluginOptions.cssModules;
 
   if (!cssModules) {
     return;
   }
 
-  if (cssModules === "auto") {
+  if (cssModules === 'auto') {
     cssModules = /\.module(s)?\.\w+$/i;
   }
 
@@ -43,14 +43,14 @@ function setCssModulesOption(filename, options, pluginOptions) {
   options.cssModules = cssModules;
 }
 
-function prepareOptions(filename, map, lightningcssOptions, pluginOptions) {
+function prepareOptions (filename, map, lightningcssOptions, pluginOptions) {
   const options = {
     filename,
     sourceMap: !!map,
-    ...lightningcssOptions,
+    ...lightningcssOptions
   };
 
-  if (!options.hasOwnProperty("cssModules")) {
+  if (!Object.prototype.hasOwnProperty.call(options, 'cssModules')) {
     setCssModulesOption(filename, options, pluginOptions);
   }
 
