@@ -14,6 +14,8 @@ jobs:
     - uses: actions/setup-node@v3.6.0
       with:
         node-version: '18.x'
+        # required for credentials to be taken in account
+        registry-url: 'https://registry.npmjs.org'
     - name: Install latest npm
       run: npm install -g npm
     - name: Install
