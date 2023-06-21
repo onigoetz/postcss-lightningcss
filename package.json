@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "browserslist": "^4.19.1",
-    "lightningcss": "^1.14.0"
+    "lightningcss": "^1.21.0"
   },
   "devDependencies": {
     "@knagis/postcss-advanced-variables": "4.0.0",

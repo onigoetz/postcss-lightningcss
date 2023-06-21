@@ -147,7 +147,7 @@ const tests = [
                 width: 100px;
                 color: rgba(1, 2, 3, .5);
             }`,
-    '.a{color:red;width:100px}.b{width:100px;color:#01020380}'
+    '.a{color:red;width:100px}.b{color:#01020380;width:100px}'
   ],
   [
     '.test { padding-top: 1px; padding-right: 2px; padding-bottom: 1px; padding-left: 2px }',
