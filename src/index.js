@@ -1,11 +1,8 @@
-const browserslist = require('browserslist');
 const css = require('lightningcss');
+const { prepareGlobalOptions, prepareOptions } = require("./options.js");
 
 const SOURCEMAP_COMMENT = 'sourceMappingURL=data:application/json;base64';
 
-const defaultLightningcssOptions = {
-  minify: true
-};
 
 function toBase64 (content) {
   return Buffer.from(content).toString('base64');
@@ -18,46 +15,20 @@ function toBase64 (content) {
  * @returns {import('postcss').Plugin}
  */
 function lightningcssPlugin (partialOptions = {}) {
-  const lightningcssOptions = {
-    ...defaultLightningcssOptions,
-    ...(partialOptions.lightningcssOptions || {})
-  };
-
-  // lightningcss uses a custom syntax to declare supported browsers
-  // the `browsers` option provides a helper to declare them with
-  // a `browerslist` query
-  if (partialOptions.browsers != null) {
-    const browsers = browserslist(partialOptions.browsers);
-    lightningcssOptions.targets = css.browserslistToTargets(browsers);
-  }
+  const lightningcssOptions = prepareGlobalOptions(partialOptions);
 
   return {
     postcssPlugin: 'postcss-lightningcss',
     OnceExit (root, { result, postcss }) {
+      
+      const filename = (root.source && root.source.input.file) || '';
       // Infer sourcemaps options from postcss
       const map = result.opts.map;
 
-      const filename = (root.source && root.source.input.file) || '';
-      let cssModules = typeof lightningcssOptions.cssModules === 'boolean'
-        ? lightningcssOptions.cssModules
-        : partialOptions.cssModules || false;
-
-      if (cssModules === 'auto') {
-        cssModules = /\.module(s)?\.\w+$/i;
-      }
-      // Promise cssModules: boolean or RegExp
-      cssModules = typeof cssModules === 'boolean'
-        ? cssModules
-        : cssModules && cssModules.test(filename);
-
-      const options = {
-        filename,
-        sourceMap: !!map,
-        ...lightningcssOptions,
-        cssModules
-      };
+      const options = prepareOptions(filename, map, lightningcssOptions, partialOptions);
 
       const intermediateResult = root.toResult({
+        // The sourcemap needs to be inline for lightningcss to understand it
         map: map ? { inline: true } : false
       });
 
