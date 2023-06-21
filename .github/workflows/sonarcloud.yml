@@ -16,8 +16,6 @@ jobs:
       uses: actions/setup-node@v3.6.0
       with:
         node-version: v18.x
-    - id: node_path
-      run: echo "node=$(which node)" >> $GITHUB_OUTPUT
     - name: Install
       run: yarn install
     - name: Test
@@ -27,6 +25,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with: 
-        args: >
-          -Dsonar.nodejs.executable=${{ steps.node_path.outputs.node }}
