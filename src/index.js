@@ -19,7 +19,7 @@ function lightningcssPlugin (partialOptions = {}) {
   return {
     postcssPlugin: 'postcss-lightningcss',
     OnceExit (root, { result, postcss }) {
-      const filename = (root.source && root.source.input.file) || '';
+      const filename = (root?.source?.input.file) || '';
       // Infer sourcemaps options from postcss
       const map = result.opts.map;
 
@@ -52,7 +52,6 @@ function lightningcssPlugin (partialOptions = {}) {
       }
 
       result.root = postcss.parse(code, {
-        // TODO :: should we pass more options ?
         from: result.opts.from,
         map
       });
