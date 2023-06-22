@@ -39,6 +39,10 @@ postcssLightningcss({
   // - boolean - true enable css modules for all files
   // Will be overwrite by the lightningcssOptions cssModules(boolean) option
   cssModules: /\.module\.css/,
+
+  // Callback containing the transformed class names for cssModules
+  // this runs only if cssModules is enabled
+  cssModulesJSON(cssFileName: string, json: object, outputFileName: string): {},
   // Will pass all options to lightningcss
   // Check out their documentation for details:
   // https://www.npmjs.com/package/lightningcss#user-content-documentation
@@ -68,6 +72,41 @@ postcssLightningcss({
 ```
 
 The detailed list of `lightningcssOptions` can be found [here](https://github.com/parcel-bundler/lightningcss/blob/master/node/index.d.ts)
+
+### CSS Modules
+
+When transforming CSS Modules, class names get changed, to get the mapping of the class names, you can specify a `cssModulesJSON` function like the following:
+
+```javascript
+const path = require("path");
+const fs = require("fs");
+
+postcssLightningcss({
+  cssModules: /\.module\.css/,
+  cssModulesJSON(cssFileName, json, outputFileName) {
+    const cssName = path.basename(cssFileName, ".css");
+    const jsonFileName = path.resolve("./build/" + cssName + ".json");
+    fs.writeFileSync(jsonFileName, JSON.stringify(json));
+  },
+});
+```
+
+You may also combine this with [custom naming patterns](https://lightningcss.dev/css-modules.html#custom-naming-patterns):
+
+```javascript
+postcssLightningcss({
+  cssModulesJSON(cssFileName, json, outputFileName) {
+    // Your export function here
+  },
+  lightningcssOptions: {
+    cssModules: {
+      pattern: "my-company-[name]-[hash]-[local]",
+    },
+  },
+});
+```
+
+> Note that using a custom pattern cannot be used at the same time as using a RegEx to conditionally enable cssModules because the `cssModules` option within `lightningcssOptions` takes precedence over the plugin's `cssModules` option
 
 ## About source maps
 
@@ -109,8 +148,9 @@ The rows marked as "Depends on browser config" will convert your CSS only if:
 
 1. `lightningcss` doesn't support the [`logical` shorthand keyword](https://drafts.csswg.org/css-logical/#logical-shorthand-keyword) as its syntax is likely to change
 2. Progressive custom properties works only if the properties don't contain properties themselves:
-  - `lab(29.2345% 39.3825 20.0664)` has a proper fallback
-  - `oklch(40% 0.234 0.39 / var(--opacity-50))` will not have a fallback
+
+- `lab(29.2345% 39.3825 20.0664)` has a proper fallback
+- `oklch(40% 0.234 0.39 / var(--opacity-50))` will not have a fallback
 
 ## License
 

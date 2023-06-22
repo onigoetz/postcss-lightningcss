@@ -7,8 +7,10 @@ const postcssLightningcss = require('../src/index.js');
 
 const css1 =
   '.a { color: #ff0000; } @media all { .b { color: rgba(255, 0, 0, 1) } }';
-const css2 = '.class-name { color: green; } :global(.global-class-name) { color: green; }';
-const minified2 = '.class-name{color:green}:global(.global-class-name){color:green}';
+const css2 =
+  '.class-name { color: green; } :global(.global-class-name) { color: green; }';
+const minified2 =
+  '.class-name{color:green}:global(.global-class-name){color:green}';
 const minified1 = '.a{color:red}.b{color:red}';
 
 test('works as a postcss plugin via .use()', (t) => {
@@ -45,25 +47,23 @@ test('edge cases: should process empty', (t) => {
 });
 
 test('error handling: postcss error', async (t) => {
-  const error = await t.throwsAsync(postcss([postcssLightningcss]).process('.test { color }'));
+  const error = await t.throwsAsync(
+    postcss([postcssLightningcss]).process('.test { color }')
+  );
 
   t.is(error.name, 'CssSyntaxError');
-  t.is(
-    error.message,
-    '<css input>:1:9: Unknown word'
-  );
+  t.is(error.message, '<css input>:1:9: Unknown word');
   t.is(error.line, 1);
   t.is(error.column, 9);
 });
 
 test('error handling: lightningcss error', async (t) => {
-  const error = await t.throwsAsync(postcss([postcssLightningcss]).process('{foo:1}'));
+  const error = await t.throwsAsync(
+    postcss([postcssLightningcss]).process('{foo:1}')
+  );
 
   t.is(error.name, 'SyntaxError');
-  t.is(
-    error.message,
-    'Invalid empty selector'
-  );
+  t.is(error.message, 'Invalid empty selector');
   t.is(error.loc.line, 1);
   t.is(error.loc.column, 1);
 });
@@ -79,38 +79,73 @@ test('should work with postcss-nested', (t) => {
 });
 
 test('should work with cssmodules: boolean', async (t) => {
-  const moduleCssResult = postcss([postcssLightningcss({ cssModules: true })])
-    .process(css2, { from: 'input.css' });
+  const moduleCssResult = postcss([
+    postcssLightningcss({ cssModules: true })
+  ]).process(css2, { from: 'input.css' });
   // css modules generate different hash on CI and local machine
   t.not(moduleCssResult.css, minified2);
-  const nonModuleCssResult = await postcss([postcssLightningcss({ cssModules: false })])
-    .process(css2, { from: 'input.css' });
+  const nonModuleCssResult = await postcss([
+    postcssLightningcss({ cssModules: false })
+  ]).process(css2, { from: 'input.css' });
   t.is(nonModuleCssResult.css, minified2);
 });
 
 test('should work with cssmodules: auto', async (t) => {
-  const moduleCssResult = postcss([postcssLightningcss({ cssModules: 'auto' })])
-    .process(css2, { from: 'input.module.css' });
+  const moduleCssResult = postcss([
+    postcssLightningcss({ cssModules: 'auto' })
+  ]).process(css2, { from: 'input.module.css' });
   t.not(moduleCssResult.css, minified2);
-  const nonModuleCssResult = await postcss([postcssLightningcss({ cssModules: 'auto' })])
-    .process(css2, { from: 'input.css' });
+  const nonModuleCssResult = await postcss([
+    postcssLightningcss({ cssModules: 'auto' })
+  ]).process(css2, { from: 'input.css' });
   t.is(nonModuleCssResult.css, minified2);
 });
 
 test('should work with cssmodules: regex', async (t) => {
-  const moduleCssResult = await postcss([postcssLightningcss({ cssModules: /\.custom\.css/ })])
-    .process(css2, { from: 'input.custom.css' });
+  const moduleCssResult = await postcss([
+    postcssLightningcss({ cssModules: /\.custom\.css/ })
+  ]).process(css2, { from: 'input.custom.css' });
   t.not(moduleCssResult.css, minified2);
 
-  const nonModuleCssResult = await postcss([postcssLightningcss({ cssModules: /\.custom\.css/ })])
-    .process(css2, { from: 'input.module.css' });
+  const nonModuleCssResult = await postcss([
+    postcssLightningcss({ cssModules: /\.custom\.css/ })
+  ]).process(css2, { from: 'input.module.css' });
   t.is(nonModuleCssResult.css, minified2);
+});
+
+test('should work with cssmodules: export JSON', async (t) => {
+  t.plan(4);
+  const moduleCssResult = postcss([
+    postcssLightningcss({
+      cssModules: true,
+      cssModulesJSON: function (cssFileName, json, outputFileName) {
+        t.truthy(cssFileName.indexOf('/input.module.css') > -1);
+        t.deepEqual(
+          {
+            'class-name': {
+              name: '_8y3hhW_class-name',
+              composes: [],
+              isReferenced: false
+            }
+          },
+          json
+        );
+        t.is(outputFileName, 'boom.css');
+      }
+    })
+  ]).process(css2, { from: 'input.module.css', to: 'boom.css' });
+  t.not(moduleCssResult.css, minified2);
 });
 
 test('should work overwrite by lightningcssOptions.cssModules', (t) => {
   t.plan(1);
 
-  return postcss([postcssLightningcss({ cssModules: /\.module\.css/, lightningcssOptions: { cssModules: false } })])
+  return postcss([
+    postcssLightningcss({
+      cssModules: /\.module\.css/,
+      lightningcssOptions: { cssModules: false }
+    })
+  ])
     .process(css2, { from: 'input.module.css' })
     .then((result) => t.is(result.css, minified2));
 });

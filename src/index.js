@@ -51,6 +51,14 @@ function lightningcssPlugin (partialOptions = {}) {
         }
       }
 
+      if (options.cssModules && partialOptions.cssModulesJSON) {
+        partialOptions.cssModulesJSON(
+          filename,
+          res.exports,
+          result.opts.to
+        );
+      }
+
       result.root = postcss.parse(code, {
         from: result.opts.from,
         map
