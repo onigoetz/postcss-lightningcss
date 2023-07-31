@@ -1,6 +1,6 @@
 const browserslist = require('browserslist');
 const css = require('lightningcss');
-const path = require('path');
+const process = require('process');
 
 const defaultLightningcssOptions = {
   minify: true
@@ -17,7 +17,7 @@ function prepareGlobalOptions (pluginOptions = {}) {
     browserslistConfig = pluginOptions.browsers;
   } else {
     // try to find a browserslist config
-    browserslistConfig = browserslist.loadConfig({ path: path.resolve('.') });
+    browserslistConfig = browserslist.loadConfig({ path: process.cwd() });
   }
 
   // lightningcss uses a custom syntax to declare supported browsers
