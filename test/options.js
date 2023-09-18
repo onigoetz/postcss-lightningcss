@@ -1,22 +1,34 @@
 const test = require('ava');
+const path = require('path');
 const { prepareGlobalOptions, prepareOptions } = require('../src/options.js');
 
 test('global: sets default config', (t) => {
-  const result = prepareGlobalOptions({});
+  const result = prepareGlobalOptions(path.join(__dirname, '..'), {});
 
   t.deepEqual(result, { minify: true });
 });
 
 test('global: passes other options through', (t) => {
-  const result = prepareGlobalOptions({
+  const result = prepareGlobalOptions(path.join(__dirname, '..'), {
     lightningcssOptions: { drafts: { nesting: true } }
   });
 
   t.deepEqual(result, { minify: true, drafts: { nesting: true } });
 });
 
+test('global: use browserslist config', (t) => {
+  const result = prepareGlobalOptions(path.join(__dirname, 'fixtures', 'browserslist'));
+
+  t.deepEqual(result, {
+    minify: true,
+    targets: {
+      chrome: 100 << 16
+    }
+  });
+});
+
 test('global: prepares browser targets', (t) => {
-  const result = prepareGlobalOptions({
+  const result = prepareGlobalOptions(path.join(__dirname, '..'), {
     browsers: 'chrome 95'
   });
 

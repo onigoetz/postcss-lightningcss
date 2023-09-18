@@ -14,7 +14,9 @@ function toBase64 (content) {
  * @returns {import('postcss').Plugin}
  */
 function lightningcssPlugin (partialOptions = {}) {
-  const lightningcssOptions = prepareGlobalOptions(partialOptions);
+  const dir = process.cwd();
+
+  const lightningcssOptions = prepareGlobalOptions(dir, partialOptions);
 
   return {
     postcssPlugin: 'postcss-lightningcss',
