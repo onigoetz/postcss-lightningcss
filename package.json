@@ -1,6 +1,6 @@
 {
   "name": "postcss-lightningcss",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "PostCSS plugin to use lightningcss",
   "keywords": [
     "css",
