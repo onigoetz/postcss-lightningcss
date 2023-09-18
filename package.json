@@ -23,7 +23,7 @@
     "prepublishOnly": "yarn lint && yarn test"
   },
   "engines": {
-    "node": "^14.13.0 || >=15.0.0",
+    "node": "^16.0.0 || ^18.0.0 || >= 20",
     "npm": ">=7.0.0"
   },
   "peerDependencies": {
