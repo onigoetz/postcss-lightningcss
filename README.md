@@ -1,11 +1,16 @@
 # postcss-lightningcss
 
-[![GitHub CI](https://github.com/onigoetz/postcss-lightningcss/actions/workflows/build.yml/badge.svg)](https://github.com/onigoetz/postcss-lightningcss) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=onigoetz_postcss-lightningcss&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=onigoetz_postcss-lightningcss) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=onigoetz_postcss-lightningcss&metric=coverage)](https://sonarcloud.io/summary/new_code?id=onigoetz_postcss-lightningcss)
+[![Latest version](https://img.shields.io/github/release/onigoetz/postcss-lightningcss.svg?style=flat-square)](https://github.com/onigoetz/postcss-lightningcss/releases)
+![License](https://img.shields.io/github/license/onigoetz/postcss-lightningcss?style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/onigoetz/postcss-lightningcss/build.yml?style=flat-square&logo=github)
+[![Sonar Coverage](https://sonarcloud.io/api/project_badges/measure?project=onigoetz_postcss-lightningcss&metric=coverage)](https://sonarcloud.io/dashboard?id=onigoetz_postcss-lightningcss)
+[![Sonar Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=onigoetz_postcss-lightningcss&metric=alert_status)](https://sonarcloud.io/dashboard?id=onigoetz_postcss-lightningcss)
+[![NPM Downloads](https://img.shields.io/npm/dm/postcss-lightningcss?style=flat-square&logo=npm)](https://www.npmjs.com/package/postcss-lightningcss)
 
 This PostCSS plugin uses [lightningcss](https://lightningcss.dev/) to compile and minify your CSS.
 
-`lightningcss` is more than a minifier as it can replace quite a few PostCSS plugins such as `autoprefixer`.
-You can find the complete list of features in the [package's documentation](https://github.com/parcel-bundler/lightningcss#from-node) and the list of plugins it's able to replace below.
+`lightningcss` is more than a minifier as it can replace several PostCSS plugins such as `autoprefixer`.
+You can find the complete list of features in the [package's documentation](https://github.com/parcel-bundler/lightningcss#from-node) and the list of plugins it can replace below.
 
 ## Install
 
@@ -75,7 +80,8 @@ The detailed list of `lightningcssOptions` can be found [here](https://github.co
 
 ### CSS Modules
 
-When transforming CSS Modules, class names get changed, to get the mapping of the class names, you can specify a `cssModulesJSON` function like the following:
+When transforming CSS Modules, class names get changed.
+To get the mapping of the class names, you can specify a `cssModulesJSON` function like the following:
 
 ```javascript
 const path = require("path");
@@ -106,7 +112,7 @@ postcssLightningcss({
 });
 ```
 
-> Note that using a custom pattern cannot be used at the same time as using a RegEx to conditionally enable cssModules because the `cssModules` option within `lightningcssOptions` takes precedence over the plugin's `cssModules` option
+> Note that using a custom pattern cannot be used at the same time as using a RegEx to conditionally enable CSS modules because the `cssModules` option within `lightningcssOptions` takes precedence over the plugin's `cssModules` option
 
 ## About source maps
 
@@ -116,7 +122,7 @@ Mappings for properties cannot be re-created after this transformation.
 
 ## PostCSS plugins that you can remove if you have `lightningcss`
 
-> This list is not exhaustive, if you have a doubt, have a look at the [Lightning CSS Playground](https://lightningcss.dev/playground/index.html)
+> This list is not exhaustive. If you have a doubt, have a look at the [Lightning CSS Playground](https://lightningcss.dev/playground/index.html)
 
 The rows marked as "Depends on browser config" will convert your CSS only if:
 
@@ -147,7 +153,7 @@ The rows marked as "Depends on browser config" will convert your CSS only if:
 | `postcss-progressive-custom-properties` | Depends on browser config (2)            |
 
 1. `lightningcss` doesn't support the [`logical` shorthand keyword](https://drafts.csswg.org/css-logical/#logical-shorthand-keyword) as its syntax is likely to change
-2. Progressive custom properties works only if the properties don't contain properties themselves:
+2. Progressive custom properties work only if the properties don't contain properties themselves:
 
 - `lab(29.2345% 39.3825 20.0664)` has a proper fallback
 - `oklch(40% 0.234 0.39 / var(--opacity-50))` will not have a fallback
