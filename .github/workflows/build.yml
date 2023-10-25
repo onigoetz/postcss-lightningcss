@@ -17,8 +17,10 @@ jobs:
       with:
         node-version: 20.x
         cache: 'yarn'
-    - name: Install
-      run: yarn install
+    - name: 📥 Monorepo install
+      uses: ./.github/actions/yarn-nm-install
+      with:
+        enable-corepack: false
     - name: Lint
       run: yarn lint
 
@@ -26,7 +28,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node-version: [16.x, 18.x, 20.x]
+        node-version: [18.x, 20.x]
         include:
         - os: macos-latest
           node-version: 20.x
@@ -43,7 +45,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'yarn'
-    - name: Install
-      run: yarn install
+    - name: 📥 Monorepo install
+      uses: ./.github/actions/yarn-nm-install
+      with:
+        enable-corepack: false
     - name: Test
       run: yarn test

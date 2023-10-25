@@ -16,8 +16,10 @@ jobs:
       uses: actions/setup-node@v4.0.0
       with:
         node-version: v20.x
-    - name: Install
-      run: yarn install
+    - name: 📥 Monorepo install
+      uses: ./.github/actions/yarn-nm-install
+      with:
+        enable-corepack: false
     - name: Test
       run: yarn test:coverage
     - name: SonarCloud Scan

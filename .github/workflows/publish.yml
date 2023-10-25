@@ -18,8 +18,10 @@ jobs:
         registry-url: 'https://registry.npmjs.org'
     - name: Install latest npm
       run: npm install -g npm
-    - name: Install
-      run: yarn install
+    - name: 📥 Monorepo install
+      uses: ./.github/actions/yarn-nm-install
+      with:
+        enable-corepack: false
     - name: Test
       run: yarn test
     - name: Publish
