@@ -35,7 +35,7 @@
   "devDependencies": {
     "@knagis/postcss-advanced-variables": "4.0.0",
     "ava": "6.0.1",
-    "c8": "8.0.1",
+    "c8": "9.0.0",
     "postcss": "8.4.33",
     "postcss-nested": "6.0.1",
     "postcss-scss": "4.0.9",
