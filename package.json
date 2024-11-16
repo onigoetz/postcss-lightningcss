@@ -37,7 +37,7 @@
     "ava": "6.2.0",
     "c8": "10.1.2",
     "postcss": "8.4.49",
-    "postcss-nested": "6.2.0",
+    "postcss-nested": "7.0.2",
     "postcss-scss": "4.0.9",
     "semistandard": "17.0.0"
   },
