@@ -16,6 +16,8 @@ function toBase64 (content) {
 function lightningcssPlugin (partialOptions = {}) {
   const dir = process.cwd();
 
+  const parseFunc = partialOptions.bundle == true ? css.bundle : css.transform;
+
   const lightningcssOptions = prepareGlobalOptions(dir, partialOptions);
 
   return {
@@ -34,7 +36,7 @@ function lightningcssPlugin (partialOptions = {}) {
 
       options.code = Buffer.from(intermediateResult.css);
 
-      const res = css.transform(options);
+      const res = parseFunc(options);
 
       let code = res.code.toString();
 

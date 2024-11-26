@@ -38,6 +38,8 @@ postcssLightningcss({
   // Use a browserslist query that will inform which browsers are supported
   // Will add or remove vendor prefixes that are needed or not anymore
   browsers: ">= .25%",
+  // Set bundle to true to bundling dependencies referenced by CSS @import rules into a single output file. 
+  bundle: false
   // Auto set lightningcssOptions.cssModules, possible values:
   // - auto - enable CSS modules for all files matching `/\.module(s)?\.\w+$/i.test(filename)`
   // - RegExp - enable CSS modules for all files matching `/RegExp/i.test(filename)`
