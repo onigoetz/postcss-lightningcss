@@ -52,7 +52,7 @@ test('error handling: postcss error', async (t) => {
   );
 
   t.is(error.name, 'CssSyntaxError');
-  t.is(error.message, '<css input>:1:9: Unknown word');
+  t.is(error.message, '<css input>:1:9: Unknown word color');
   t.is(error.line, 1);
   t.is(error.column, 9);
 });
