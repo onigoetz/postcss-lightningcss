@@ -16,6 +16,7 @@
   "author": "Stéphane Goetz <onigoetz@onigoetz.ch>",
   "license": "MIT",
   "main": "./src/index.js",
+  "types": "./src/types.d.ts",
   "scripts": {
     "test": "ava",
     "test:coverage": "c8 --reporter=lcovonly --reporter=text ava",
