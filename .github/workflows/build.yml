@@ -61,9 +61,7 @@ jobs:
       with:
         name: coverage-${{ matrix.os }}-${{ matrix.node-version }}
         retention-days: 1
-        path: |
-          **/coverage/lcov.info
-          !node_modules/**/coverage/lcov.info
+        path: coverage/lcov.info
 
   # ─── Job 2: uploads coverage using secrets, does NOT run PR code ─────────
   static_analysis:
