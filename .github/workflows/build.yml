@@ -55,13 +55,15 @@ jobs:
     - name: Yarn install
       run: yarn install
     - name: Test
-      run: yarn test
+      run: yarn test:ci
     - uses: actions/upload-artifact@v6
       if: matrix.node-version == '20.x'
       with:
         name: coverage-${{ matrix.os }}-${{ matrix.node-version }}
         retention-days: 1
-        path: coverage/lcov.info
+        path: |
+          **/coverage/lcov.info
+          !node_modules/**/coverage/lcov.info
 
   # ─── Job 2: uploads coverage using secrets, does NOT run PR code ─────────
   static_analysis:

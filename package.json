@@ -19,7 +19,7 @@
   "types": "./src/types.d.ts",
   "scripts": {
     "test": "ava",
-    "test:coverage": "c8 --reporter=lcovonly --reporter=text ava",
+    "test:ci": "c8 --reporter=lcovonly --reporter=text ava",
     "lint": "semistandard",
     "prepublishOnly": "yarn lint && yarn test"
   },
