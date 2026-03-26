@@ -8,16 +8,11 @@ const defaultLightningcssOptions = {
 function prepareGlobalOptions (dir, pluginOptions = {}) {
   const lightningcssOptions = {
     ...defaultLightningcssOptions,
-    ...(pluginOptions.lightningcssOptions || {})
+    ...pluginOptions.lightningcssOptions
   };
 
-  let browserslistConfig;
-  if (pluginOptions.browsers != null) {
-    browserslistConfig = pluginOptions.browsers;
-  } else {
-    // try to find a browserslist config
-    browserslistConfig = browserslist.loadConfig({ path: dir });
-  }
+  // try to find a browserslist config
+  const browserslistConfig = pluginOptions.browsers ?? browserslist.loadConfig({ path: dir });
 
   // lightningcss uses a custom syntax to declare supported browsers
   // the `browsers` option provides a helper to declare them with
@@ -58,7 +53,7 @@ function prepareOptions (filename, map, lightningcssOptions, pluginOptions) {
     ...lightningcssOptions
   };
 
-  if (!Object.prototype.hasOwnProperty.call(options, 'cssModules')) {
+  if (!Object.hasOwn(options, 'cssModules')) {
     setCssModulesOption(filename, options, pluginOptions);
   }
 
