@@ -6,7 +6,7 @@ module.exports = {
   include: ['test/**/*.js'], // test files don't have .test.js suffix
   reporters: [
     'default',
-    ['junit', { outputPath: './coverage/sonar-report.xml' }]
+    ['junit', { outputPath: './coverage/TEST-rstest.xml' }]
   ],
   coverage: {
     provider: 'istanbul',
