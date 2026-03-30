@@ -85,11 +85,20 @@ jobs:
       with:
         pattern: reports-*
         path: __reports
-    - run: find . -name "lcov.info"
+    - run: find __reports -type f
+    - name: Collect Sonar report paths
+      id: sonar_reports
+      run: |
+        while IFS= read -r f; do
+          xsltproc .github/surefire-to-sonar.xsl "$f" > "${f/TEST-/sonar-report-}"
+        done < <(find __reports -name 'TEST-*.xml')
+        echo "test_reports=$(find __reports -name "sonar-report-*.xml" | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+        echo "project_version=$(git tag -l --sort=-creatordate --format='%(refname:short)' | head -n1)" >> $GITHUB_OUTPUT
     - name: SonarCloud Scan
       uses: SonarSource/sonarqube-scan-action@v7
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         args: >
-          -Dsonar.junit.reportPaths=coverage
+          -Dsonar.testExecutionReportPaths=${{ steps.sonar_reports.outputs.test_reports }}
+          -Dsonar.projectVersion=`${{ steps.sonar_reports.outputs.project_version  }}`
