@@ -1,25 +1,24 @@
-const test = require('ava');
 const path = require('path');
 const { prepareGlobalOptions, prepareOptions } = require('../src/options.js');
 
-test('global: sets default config', (t) => {
+test('global: sets default config', () => {
   const result = prepareGlobalOptions(path.join(__dirname, '..'), {});
 
-  t.deepEqual(result, { minify: true });
+  expect(result).toEqual({ minify: true });
 });
 
-test('global: passes other options through', (t) => {
+test('global: passes other options through', () => {
   const result = prepareGlobalOptions(path.join(__dirname, '..'), {
     lightningcssOptions: { drafts: { nesting: true } }
   });
 
-  t.deepEqual(result, { minify: true, drafts: { nesting: true } });
+  expect(result).toEqual({ minify: true, drafts: { nesting: true } });
 });
 
-test('global: use browserslist config', (t) => {
+test('global: use browserslist config', () => {
   const result = prepareGlobalOptions(path.join(__dirname, 'fixtures', 'browserslist'));
 
-  t.deepEqual(result, {
+  expect(result).toEqual({
     minify: true,
     targets: {
       chrome: 100 << 16
@@ -27,12 +26,12 @@ test('global: use browserslist config', (t) => {
   });
 });
 
-test('global: prepares browser targets', (t) => {
+test('global: prepares browser targets', () => {
   const result = prepareGlobalOptions(path.join(__dirname, '..'), {
     browsers: 'chrome 95'
   });
 
-  t.deepEqual(result, {
+  expect(result).toEqual({
     minify: true,
     targets: {
       chrome: 95 << 16
@@ -40,7 +39,7 @@ test('global: prepares browser targets', (t) => {
   });
 });
 
-test('per-file: override automatic source-map', (t) => {
+test('per-file: override automatic source-map', () => {
   const lightningcssOptions = {
     minify: true,
     sourceMap: true
@@ -57,14 +56,14 @@ test('per-file: override automatic source-map', (t) => {
     pluginOptions
   );
 
-  t.deepEqual(options, {
+  expect(options).toEqual({
     filename,
     sourceMap: true,
     minify: true
   });
 });
 
-test('per-file: automatic css-modules: enable', (t) => {
+test('per-file: automatic css-modules: enable', () => {
   const lightningcssOptions = {
     minify: true
   };
@@ -82,7 +81,7 @@ test('per-file: automatic css-modules: enable', (t) => {
     pluginOptions
   );
 
-  t.deepEqual(options, {
+  expect(options).toEqual({
     filename,
     sourceMap,
     minify: true,
@@ -90,7 +89,7 @@ test('per-file: automatic css-modules: enable', (t) => {
   });
 });
 
-test('per-file: automatic css-modules: disable', (t) => {
+test('per-file: automatic css-modules: disable', () => {
   const lightningcssOptions = {
     minify: true
   };
@@ -108,7 +107,7 @@ test('per-file: automatic css-modules: disable', (t) => {
     pluginOptions
   );
 
-  t.deepEqual(options, {
+  expect(options).toEqual({
     filename,
     sourceMap,
     minify: true,
@@ -116,7 +115,7 @@ test('per-file: automatic css-modules: disable', (t) => {
   });
 });
 
-test('per-file: automatic css-modules: always on', (t) => {
+test('per-file: automatic css-modules: always on', () => {
   const lightningcssOptions = {
     minify: true,
     cssModules: true
@@ -135,7 +134,7 @@ test('per-file: automatic css-modules: always on', (t) => {
     pluginOptions
   );
 
-  t.deepEqual(options, {
+  expect(options).toEqual({
     filename,
     sourceMap,
     minify: true,
@@ -143,7 +142,7 @@ test('per-file: automatic css-modules: always on', (t) => {
   });
 });
 
-test('per-file: automatic css-modules: regex', (t) => {
+test('per-file: automatic css-modules: regex', () => {
   const lightningcssOptions = {
     minify: true
   };
@@ -161,7 +160,7 @@ test('per-file: automatic css-modules: regex', (t) => {
     pluginOptions
   );
 
-  t.deepEqual(options, {
+  expect(options).toEqual({
     filename,
     sourceMap,
     minify: true,
@@ -169,7 +168,7 @@ test('per-file: automatic css-modules: regex', (t) => {
   });
 });
 
-test('per-file: automatic css-modules: custom pattern', (t) => {
+test('per-file: automatic css-modules: custom pattern', () => {
   const lightningcssOptions = {
     minify: true,
     cssModules: {
@@ -190,7 +189,7 @@ test('per-file: automatic css-modules: custom pattern', (t) => {
     pluginOptions
   );
 
-  t.deepEqual(options, {
+  expect(options).toEqual({
     filename,
     sourceMap,
     minify: true,
@@ -200,7 +199,7 @@ test('per-file: automatic css-modules: custom pattern', (t) => {
   });
 });
 
-test('per-file: automatic css-modules: custom pattern, at plugin level', (t) => {
+test('per-file: automatic css-modules: custom pattern, at plugin level', () => {
   const lightningcssOptions = {
     minify: true
   };
@@ -220,7 +219,7 @@ test('per-file: automatic css-modules: custom pattern, at plugin level', (t) => 
     pluginOptions
   );
 
-  t.deepEqual(options, {
+  expect(options).toEqual({
     filename,
     sourceMap,
     minify: true,

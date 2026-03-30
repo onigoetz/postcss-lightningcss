@@ -1,0 +1,17 @@
+module.exports = {
+  globals: true,           // makes test/expect available without imports
+  output: {
+    module: false,         // execute test files as CJS (not ESM)
+  },
+  testEnvironment: 'node',
+  include: ['test/**/*.js'],  // test files don't have .test.js suffix
+  reporters: [
+    'default',
+    ['junit', { outputPath: './coverage/sonar-report.xml' }],
+  ],
+  coverage: {
+    provider: 'istanbul',
+    reporters: ['lcovonly', 'text'],
+    reportsDirectory: './coverage',
+  },
+};

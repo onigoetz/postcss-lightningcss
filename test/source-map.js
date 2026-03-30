@@ -1,4 +1,3 @@
-const test = require('ava');
 const postcss = require('postcss');
 const postcssScss = require('postcss-scss');
 const postcssAdvancedVariables = require('@knagis/postcss-advanced-variables');
@@ -32,8 +31,8 @@ const minifiedSourceMap1 = {
   ]
 };
 
-test('Should not add a sourcemap when nothing is specified', (t) => {
-  t.plan(1);
+test('Should not add a sourcemap when nothing is specified', () => {
+  expect.assertions(1);
 
   return postcss()
     .use(postcssLightningcss())
@@ -41,15 +40,14 @@ test('Should not add a sourcemap when nothing is specified', (t) => {
       '.test { color: #ff0000; padding: 2px; padding-right: 3em; }'
     )
     .then((result) =>
-      t.is(
-        result.css,
+      expect(result.css).toBe(
         '.test{color:red;padding:2px 3em 2px 2px}'
       )
     );
 });
 
-test('Should not add a sourcemap when disabled', (t) => {
-  t.plan(1);
+test('Should not add a sourcemap when disabled', () => {
+  expect.assertions(1);
 
   return postcss()
     .use(postcssLightningcss())
@@ -58,15 +56,14 @@ test('Should not add a sourcemap when disabled', (t) => {
       { map: false }
     )
     .then((result) =>
-      t.is(
-        result.css,
+      expect(result.css).toBe(
         '.test{color:red;padding:2px 3em 2px 2px}'
       )
     );
 });
 
-test('should remap the sourcemap to the original file', (t) => {
-  t.plan(2);
+test('should remap the sourcemap to the original file', () => {
+  expect.assertions(2);
 
   return postcss()
     .use(postcssAdvancedVariables())
@@ -95,43 +92,43 @@ test('should remap the sourcemap to the original file', (t) => {
       // console.log(`https://sokra.github.io/source-map-visualization/#base64,${btoa(result.css)},${btoa(result.map.toString())},${btoa(inputCSS1)}`);
       // require('fs').writeFileSync('final.css', result.css.replace("input.css.map", `data:application/json;base64,${btoa(result.map.toString())}`))
 
-      t.is(result.css, minifiedCSS1);
-      t.deepEqual(result.map.toJSON(), minifiedSourceMap1);
+      expect(result.css).toBe(minifiedCSS1);
+      expect(result.map.toJSON()).toEqual(minifiedSourceMap1);
     });
 });
 
-test('should remap the sourcemap to the original file, inline sourcemaps', (t) => {
-  t.plan(2);
+test('should remap the sourcemap to the original file, inline sourcemaps', () => {
+  expect.assertions(2);
 
   return postcss()
     .use(postcssAdvancedVariables())
     .use(postcssLightningcss())
     .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: { inline: true } })
     .then((result) => {
-      t.is(result.css.split('\n')[0], minifiedCSS1);
+      expect(result.css.split('\n')[0]).toBe(minifiedCSS1);
 
       // Extract the sourcemap for comparison
       const sourcemapComment = result.css.split('\n')[1];
       const base64 = sourcemapComment.split(';base64,')[1].split(' ')[0];
 
-      t.deepEqual(JSON.parse(Buffer.from(base64, 'base64')), minifiedSourceMap1);
+      expect(JSON.parse(Buffer.from(base64, 'base64'))).toEqual(minifiedSourceMap1);
     });
 });
 
-test('should remap the sourcemap to the original file, boolean option', (t) => {
-  t.plan(2);
+test('should remap the sourcemap to the original file, boolean option', () => {
+  expect.assertions(2);
 
   return postcss()
     .use(postcssAdvancedVariables())
     .use(postcssLightningcss())
     .process(inputCSS1, { from: 'input.css', parser: postcssScss, map: true })
     .then((result) => {
-      t.is(result.css.split('\n')[0], minifiedCSS1);
+      expect(result.css.split('\n')[0]).toBe(minifiedCSS1);
 
       // Extract the sourcemap for comparison
       const sourcemapComment = result.css.split('\n')[1];
       const base64 = sourcemapComment.split(';base64,')[1].split(' ')[0];
 
-      t.deepEqual(JSON.parse(Buffer.from(base64, 'base64')), minifiedSourceMap1);
+      expect(JSON.parse(Buffer.from(base64, 'base64'))).toEqual(minifiedSourceMap1);
     });
 });
