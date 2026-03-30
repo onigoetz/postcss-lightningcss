@@ -89,6 +89,7 @@ jobs:
     - name: Collect Sonar report paths
       id: sonar_reports
       run: |
+        sudo apt-get install -y libxslt1-dev
         while IFS= read -r f; do
           xsltproc .github/surefire-to-sonar.xsl "$f" > "${f/TEST-/sonar-report-}"
         done < <(find __reports -name 'TEST-*.xml')
