@@ -1,3 +1,4 @@
+const { test, expect } = require('@rstest/core');
 const postcss = require('postcss');
 const postcssLightningcss = require('../src/index.js');
 

@@ -1,3 +1,4 @@
+const { test, expect } = require('@rstest/core');
 const postcss = require('postcss');
 const postcssScss = require('postcss-scss');
 const postcssAdvancedVariables = require('@knagis/postcss-advanced-variables');

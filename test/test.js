@@ -1,10 +1,10 @@
 // The tests here are largely inspired by the tests in postcss-csso
-
+const { test, expect } = require('@rstest/core');
 const postcss = require('postcss');
 const postcssNested = require('postcss-nested');
 const postcssLightningcss = require('../src/index.js');
 
-async function getError(promise) {
+async function getError (promise) {
   try {
     await promise;
     throw new Error('Expected promise to reject');

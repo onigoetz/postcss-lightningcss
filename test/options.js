@@ -1,3 +1,4 @@
+const { test, expect } = require('@rstest/core');
 const path = require('path');
 const { prepareGlobalOptions, prepareOptions } = require('../src/options.js');
 
