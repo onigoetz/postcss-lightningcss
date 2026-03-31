@@ -63,7 +63,7 @@ jobs:
         retention-days: 1
         path: |
           **/coverage/lcov.info
-          **/coverage/TEST-*.xml
+          **/coverage/sonar-report.xml
           !node_modules/**
 
   # ─── Job 2: uploads coverage using secrets, does NOT run PR code ─────────
@@ -89,11 +89,7 @@ jobs:
     - name: Collect Sonar report paths
       id: sonar_reports
       run: |
-        sudo apt-get install -y xsltproc
-        while IFS= read -r f; do
-          xsltproc .github/surefire-to-sonar.xsl "$f" > "${f/TEST-/sonar-report-}"
-        done < <(find __reports -name 'TEST-*.xml')
-        echo "test_reports=$(find __reports -name "sonar-report-*.xml" | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+        echo "test_reports=$(find __reports -name "sonar-report.xml" | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
         echo "project_version=$(git tag -l --sort=-creatordate --format='%(refname:short)' | head -n1)" >> $GITHUB_OUTPUT
     - name: SonarCloud Scan
       uses: SonarSource/sonarqube-scan-action@v7

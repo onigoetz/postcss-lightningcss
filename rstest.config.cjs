@@ -1,3 +1,4 @@
+const { SonarReporter } = require('rstest-sonar-reporter');
 module.exports = {
   output: {
     module: false // execute test files as CJS (not ESM)
@@ -6,7 +7,7 @@ module.exports = {
   include: ['test/**/*.js'], // test files don't have .test.js suffix
   reporters: [
     'default',
-    ['junit', { outputPath: './coverage/TEST-rstest.xml' }]
+    new SonarReporter({ outputFile: './coverage/sonar-report.xml' })
   ],
   coverage: {
     provider: 'istanbul',

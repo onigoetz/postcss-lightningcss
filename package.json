@@ -40,6 +40,7 @@
     "postcss": "8.5.8",
     "postcss-nested": "7.0.2",
     "postcss-scss": "4.0.9",
+    "rstest-sonar-reporter": "^0.1.0",
     "semistandard": "17.0.0"
   },
   "files": [

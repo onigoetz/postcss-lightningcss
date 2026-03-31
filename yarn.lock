@@ -2186,6 +2186,7 @@ __metadata:
     postcss: "npm:8.5.8"
     postcss-nested: "npm:7.0.2"
     postcss-scss: "npm:4.0.9"
+    rstest-sonar-reporter: "npm:^0.1.0"
     semistandard: "npm:17.0.0"
   peerDependencies:
     postcss: ^8.0.0
@@ -2364,6 +2365,15 @@ __metadata:
   bin:
     rimraf: bin.js
   checksum: 10c0/9cb7757acb489bd83757ba1a274ab545eafd75598a9d817e0c3f8b164238dd90eba50d6b848bd4dcc5f3040912e882dc7ba71653e35af660d77b25c381d402e8
+  languageName: node
+  linkType: hard
+
+"rstest-sonar-reporter@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "rstest-sonar-reporter@npm:0.1.0"
+  peerDependencies:
+    "@rstest/core": ">=0.9.0"
+  checksum: 10c0/99917132077495a08892b9d6444e4474a2b9cb382641724d85d30aed470eddc564ee43f1bca1a35c2d1cd1d2ccb8d6b0d9af6c9a9d2e69bb12ffbacb568c5417
   languageName: node
   linkType: hard
 
