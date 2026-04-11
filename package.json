@@ -37,7 +37,7 @@
     "@knagis/postcss-advanced-variables": "4.0.0",
     "@rstest/core": "^0.9.5",
     "@rstest/coverage-istanbul": "^0.3.0",
-    "postcss": "8.5.8",
+    "postcss": "8.5.9",
     "postcss-nested": "7.0.2",
     "postcss-scss": "4.0.9",
     "rstest-sonar-reporter": "^0.1.0",
