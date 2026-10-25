@@ -3,7 +3,7 @@ name: Node CI
 on:
   push:
     branches: [ main ]
-  pull_request_target:
+  pull_request:
     branches: [ main ]
 
 # give zero permissions to all jobs by default
@@ -20,7 +20,6 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       with:
-        ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
         persist-credentials: false
     - name: Use Node.js
       uses: actions/setup-node@v6
@@ -52,7 +51,6 @@ jobs:
     steps:
     - uses: actions/checkout@v6
       with:
-        ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
         persist-credentials: false
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v6
@@ -74,19 +72,27 @@ jobs:
           **/coverage/sonar-report.xml
           !node_modules/**
 
-  # ─── Job 2: uploads coverage using secrets, does NOT run PR code ─────────
+  # ─── Job 2: uploads to SonarCloud using secrets ─────────────────────────
+  # Only runs for pushes and PRs from branches of this repository, never for forks
+  # or dependency bots (Dependabot has no access to Actions secrets)
   static_analysis:
     name: "🔬 Static Analysis"
     needs: build
     runs-on: ubuntu-latest
-    if: success()
+    if: >-
+      success() && (
+        github.event_name == 'push' || (
+          github.event.pull_request.head.repo.full_name == github.repository &&
+          github.event.pull_request.user.login != 'dependabot[bot]' &&
+          github.event.pull_request.user.login != 'renovate[bot]'
+        )
+      )
     permissions:
       contents: read
     steps:
     # Commit is needed to check coverage files against content
     - uses: actions/checkout@v6
       with:
-        ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.sha }}
         # Disabling shallow clone is needed by SonarQube
         fetch-depth: 0
         persist-credentials: false
@@ -98,13 +104,20 @@ jobs:
     - name: Collect Sonar report paths
       id: sonar_reports
       run: |
-        echo "test_reports=$(find __reports -name "sonar-report.xml" | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
-        echo "project_version=$(git tag -l --sort=-creatordate --format='%(refname:short)' | head -n1)" >> $GITHUB_OUTPUT
+        test_reports=$(find __reports -name "sonar-report.xml" | sort | paste -sd, -)
+        # The scanner action splits args on whitespace, only allow plain paths
+        if [[ ! "$test_reports" =~ ^[A-Za-z0-9._/,-]+$ ]]; then
+          echo "::error::Unexpected test report paths: $test_reports"
+          exit 1
+        fi
+        echo "test_reports=$test_reports" >> "$GITHUB_OUTPUT"
+        echo "project_version=$(git tag -l --sort=-creatordate --format='%(refname:short)' | head -n1)" >> "$GITHUB_OUTPUT"
     - name: SonarCloud Scan
       uses: SonarSource/sonarqube-scan-action@v7
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       with:
         args: >
+          -Dsonar.host.url=https://sonarcloud.io
           -Dsonar.testExecutionReportPaths=${{ steps.sonar_reports.outputs.test_reports }}
-          -Dsonar.projectVersion=`${{ steps.sonar_reports.outputs.project_version  }}`
+          -Dsonar.projectVersion=${{ steps.sonar_reports.outputs.project_version }}
